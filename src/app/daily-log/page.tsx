@@ -1,24 +1,13 @@
 "use client";
 import React, { useState, useEffect, useContext } from "react";
-import moment from "moment"; // Import Moment.js
+import moment from "moment";
 import PageTitle from "@/components/common/PageTitle";
 import Search from "@/components/ui/search";
 import { Button } from "@/components/ui/button";
-import { Eye, IndianRupee, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Tooltip } from "@nextui-org/tooltip";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FaGripHorizontal } from "react-icons/fa";
 
-
-import {
-  CalendarDays,
-  Clock7,
-  MapPinned,
-  BookUser,
-  UserRound,
-  Warehouse,
-  Ellipsis,
-} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -28,41 +17,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Container_with_nav from "@/components/ui/Container_with_nav";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import Daily_history_Title from "@/components/common/Daily_history_title";
 import { useQuery } from "react-query";
 import { getDailylogs } from "../apiconnect/fetch";
 import { Idailylog } from "@/type";
 import Dailylog_card from "@/components/ui/dailylog_card";
 import UserContext from "@/contextapi/userdetail/UserContext";
-import { Grid2X2 } from 'lucide-react';
-import { RxViewHorizontal } from "react-icons/rx";
 import { LiaGripHorizontalSolid } from "react-icons/lia";
 import { MdOutlineHorizontalSplit } from "react-icons/md";
 import Pageinationsection from "@/components/ui/pageinationsec";
-
-
-
-
-type EventData = {
-  id: string;
-  dateOfEvent: string;
-  timeInput: string;
-  clientName: string;
-  address: string;
-  phoneNumber: string;
-  companyName?: string;
-  requirements: string;
-  feedback: string;
-  remarks?: string;
-};
 
 const sort_events = [
   "All Daily Logs",
@@ -83,7 +45,7 @@ export default function Page() {
   const searchParams = useSearchParams()
   const { data: Allogs } = useQuery("logs", getDailylogs)
   const { currUser } = useContext(UserContext)
-  const logsToDisplay = currUser?.isAdmin === true ? Allogs?.dailylog : currUser?.dailylog;
+  const logsToDisplay = currUser?.isAdmin === true ? Allogs?.data?.dailylog : currUser?.dailylog;
   const [finallog, setFinallog] = useState<Idailylog[]>([]);
   const search = searchParams.get('query')
 
@@ -197,11 +159,6 @@ export default function Page() {
   
      const currentItems=finallog.slice(indexOfFirstItem,indexOfLastItem)
   
-
- 
-
-
-
   return (
     <Container_with_nav page_title="Events">
       <div className="flex flex-col gap-6 w-full">

@@ -26,7 +26,6 @@ import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
 import { addDailylog } from "@/app/apiconnect/formhandler";
-import { fetchUser } from "@/contextapi/userdetail/userContextProvider";
 import { getDailylogs } from "@/app/apiconnect/fetch";
 
 export default function EventForm() {
