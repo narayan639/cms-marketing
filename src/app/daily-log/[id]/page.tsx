@@ -2,7 +2,7 @@
 import { getlog_byid } from '@/app/apiconnect/formhandler'
 import Container_with_nav from '@/components/ui/Container_with_nav'
 import moment from 'moment'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useMutation } from 'react-query'
 import parse from "html-react-parser"
@@ -15,14 +15,17 @@ const Page = () => {
   const currLog = mutation?.data?.dailylog
 
   const path = usePathname()
+  const route=useRouter()
 
   const log_id = path.split("/").pop()
 
   const date = moment(currLog?.date).format('ll')
 
   useEffect(() => {
-    if (log_id) {
+    if (log_id && log_id.length === 24) {
       mutation.mutate({ data: { log_id } });
+    } else {
+      route.push('/not-found');
     }
   }, [log_id])
   return (
