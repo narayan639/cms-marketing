@@ -33,6 +33,7 @@ export const config = {
     "/payout-menu",
     "/settings",
     "/editprofile",
-    "/dailyevents"
+    "/dailyevents",
+    "/not-found"
   ],
 };

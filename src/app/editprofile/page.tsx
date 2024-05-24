@@ -64,7 +64,6 @@ const page = () => {
       toast.success(data?.message);
       refetchUsersemail();
       refetchUsers();
-      reset();
     },
     onError: (error: any) => {
       toast.error(error?.message);

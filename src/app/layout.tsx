@@ -38,7 +38,7 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <UserContextProvider>
             <Suspense fallback={<div>Loading...</div>}>
-              {path === '/login' ? null : <SideNavbar />}
+              {path === '/login'? null : <SideNavbar />}
               <div className="w-full">{children}</div>
             </Suspense>
           </UserContextProvider>
