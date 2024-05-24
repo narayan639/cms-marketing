@@ -1,18 +1,20 @@
 import axios from "axios";
 import { getToken } from "./formhandler";
 
-export const fetchCache = 'force-no-store'
-export const revalidate = 0
-export const dynamic = 'force-dynamic'
-
-const headers = {
-    'Cache-Control': 'no-store'
-};
 const token = getToken();
+const headers = {
+    headers: {
+        Authorization: `Bearer ${token}`,
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+    },
+
+}
 
 export const getUsers = async () => {
     try {
-        const res = await axios.get("/api/user/allusers", { headers });
+        const res = await axios.get("/api/user/allusers", headers);
         return res;
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -21,7 +23,7 @@ export const getUsers = async () => {
 };
 export const getEmails = async () => {
     try {
-        const res = await axios.get("/api/user/getallmails", { headers });
+        const res = await axios.get("/api/user/getallmails", headers);
         return res;
     } catch (error) {
         console.error('Error fetching emails:', error);
@@ -33,12 +35,7 @@ export const getDailylogs = async () => {
         throw new Error('No token found');
     }
     try {
-        const res = await axios.get("/api/dailylog/getall", 
- {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    }        );
+        const res = await axios.get("/api/dailylog/getall", headers);
         return res;
     } catch (error) {
         console.error('Error fetching daily logs:', error);
