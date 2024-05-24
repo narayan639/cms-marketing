@@ -39,7 +39,7 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
   const route =useRouter()
   const {data: Allogs}=useQuery("logs", getDailylogs)
 
-  const unverify_log=Allogs?.data?.dailylog.filter((i: any)=>i.is_verify=="not verify")
+  const unverify_log=Allogs?.dailylog.filter((i: any)=>i.is_verify=="not verify")
 
   const handleLogout = async () => {
     const res = await axios.get(

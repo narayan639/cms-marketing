@@ -17,7 +17,7 @@ export default function Home() {
   const Card_detail = [
     {
       title: "Total Daily log",
-      total_number: currUser?.isAdmin? Allogs?.data?.dailylog.length : currUser?.dailylog.length,
+      total_number: currUser?.isAdmin? Allogs?.dailylog.length : currUser?.dailylog.length,
       img: "/img/daily.png",
     },
     {
@@ -27,12 +27,12 @@ export default function Home() {
     },
     {
       title: "Total Pending Logs",
-      total_number: currUser?.isAdmin? Allogs?.data?.dailylog.filter((i:any)=>i.is_verify=="not verify").length : currUser?.dailylog.filter((i:any)=>i.is_verify=="not verify").length,
+      total_number: currUser?.isAdmin? Allogs?.dailylog.filter((i:any)=>i.is_verify=="not verify").length : currUser?.dailylog.filter((i:any)=>i.is_verify=="not verify").length,
       img: "/img/pending.png",
     },
     {
       title: "Total Approved Logs",
-      total_number: currUser?.isAdmin? Allogs?.data?.dailylog.filter((i:any)=>i.is_verify=="verify").length : currUser?.dailylog.filter((i:any)=>i.is_verify=="verify").length,
+      total_number: currUser?.isAdmin? Allogs?.dailylog.filter((i:any)=>i.is_verify=="verify").length : currUser?.dailylog.filter((i:any)=>i.is_verify=="verify").length,
       img: "/img/verify.png",
     },
   ];
