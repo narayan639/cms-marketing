@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs"
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbconfig/deconfig";
 import { User } from "@/models/userModel";
-import { Sendmail, emailType } from "@/utils/mailer";
 import { headers } from "next/headers";
 import jwt from "jsonwebtoken";
 import { Dailylog } from "@/models/dailylogModel";

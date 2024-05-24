@@ -27,8 +27,7 @@ import toast from "react-hot-toast";
 import { useQuery } from "react-query";
 import { getDailylogs } from "@/app/apiconnect/fetch";
 import { Nav } from "./nav";
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
+
 interface Iprop {
   children: React.ReactNode;
   page_title?: string;
@@ -41,7 +40,7 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
   const route =useRouter()
   const {data: Allogs}=useQuery("logs", getDailylogs)
 
-  const unverify_log=Allogs?.dailylog.filter((i: any)=>i.is_verify=="not verify")
+  const unverify_log=Allogs?.data.dailylog.filter((i: any)=>i.is_verify=="not verify")
 
   const handleLogout = async () => {
     const res = await axios.get(
@@ -57,7 +56,7 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
   return (
     <div>
 
-      <div className="w-full h-[70px] flex justify-between bg-secondary md:relative md:flex items-center md:px-4 sticky top-0 z-[9999]">
+      <div className="w-full h-[70px] flex justify-between bg-secondary md:relative md:flex items-center md:px-4 sticky top-0 z-10">
         <div className="hidden md:flex">
           <PageTitle title={page_title} />
         </div>

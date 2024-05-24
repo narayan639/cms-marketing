@@ -16,7 +16,6 @@ import {
   CalendarPlus,
   Handshake,
   Building2,
-  Slash,
 } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -25,7 +24,6 @@ import { useWindowWidth } from "@react-hook/window-size";
 
 export default function SideNavbar({}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [opensidebar, setOpensidebar] = useState(false);
   const [mobile_Width, setmobile_Width] = useState(false);
   const [mobilewidth_for_burger, setmobilewidth_for_burger] = useState(false);
 
