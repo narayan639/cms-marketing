@@ -27,6 +27,8 @@ import toast from "react-hot-toast";
 import { useQuery } from "react-query";
 import { getDailylogs } from "@/app/apiconnect/fetch";
 import { Nav } from "./nav";
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 interface Iprop {
   children: React.ReactNode;
   page_title?: string;

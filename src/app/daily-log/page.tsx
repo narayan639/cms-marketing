@@ -25,6 +25,8 @@ import UserContext from "@/contextapi/userdetail/UserContext";
 import { LiaGripHorizontalSolid } from "react-icons/lia";
 import { MdOutlineHorizontalSplit } from "react-icons/md";
 import Pageinationsection from "@/components/ui/pageinationsec";
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 
 const sort_events = [
   "All Daily Logs",

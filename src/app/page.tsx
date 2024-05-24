@@ -7,6 +7,8 @@ import { useQuery } from "react-query";
 import { getDailylogs } from "./apiconnect/fetch";
 import UserContext from "@/contextapi/userdetail/UserContext";
 import { useContext } from "react";
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 
 
 export default function Home() {
