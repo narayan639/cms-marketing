@@ -1,12 +1,16 @@
 import axios from "axios";
 
-const headers = {
-    'Cache-Control': 'no-store'
-};
+
 
 export const getUsers = async () => {
     try {
-        const res = await axios.get("/api/user/allusers", { headers });
+        const res = await axios.get("/api/user/allusers", {
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache',
+              'Expires': '0',
+            },
+          });
         return res;
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -16,7 +20,13 @@ export const getUsers = async () => {
 
 export const getEmails = async () => {
     try {
-        const res = await axios.get("/api/user/getallmails", { headers });
+        const res = await axios.get("/api/user/getallmails", {
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache',
+              'Expires': '0',
+            },
+          });
         return res;
     } catch (error) {
         console.error('Error fetching emails:', error);
@@ -27,8 +37,12 @@ export const getEmails = async () => {
 export const getDailylogs = async () => {
     try {
         const res = await axios.get("/api/dailylog/getall", {
-            headers
-        });
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache',
+              'Expires': '0',
+            },
+          });
         return res;
     } catch (error) {
         console.error('Error fetching daily logs:', error);
