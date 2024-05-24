@@ -86,7 +86,13 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.16.0
         version: 8.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tiptap/extension-bullet-list':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-heading':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-ordered-list':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-underline':
@@ -2088,8 +2094,8 @@ packages:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
 
-  '@tiptap/extension-bullet-list@2.3.1':
-    resolution: {integrity: sha512-pif0AB4MUoA1Xm26y1ovH7vfXaV19T9EEQH4tgN2g2eTfdFnQWDmKI0r3XRxudtg40RstBJRa81N9xEO79o8ag==}
+  '@tiptap/extension-bullet-list@2.4.0':
+    resolution: {integrity: sha512-9S5DLIvFRBoExvmZ+/ErpTvs4Wf1yOEs8WXlKYUCcZssK7brTFj99XDwpHFA29HKDwma5q9UHhr2OB2o0JYAdw==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
@@ -2159,8 +2165,8 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
-  '@tiptap/extension-ordered-list@2.3.1':
-    resolution: {integrity: sha512-+6I76b7fu0FghUtzB0LyIC5GB0xfrpAKtXjbrmeUGsOEL7jxKsE6+A5RoTrgQTfuP7oItdCZGTSC/8WtGbtEMg==}
+  '@tiptap/extension-ordered-list@2.4.0':
+    resolution: {integrity: sha512-Zo0c9M0aowv+2+jExZiAvhCB83GZMjZsxywmuOrdUbq5EGYKb7q8hDyN3hkrktVHr9UPXdPAYTmLAHztTOHYRA==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
@@ -7301,7 +7307,7 @@ snapshots:
       '@tiptap/pm': 2.3.1
       tippy.js: 6.3.7
 
-  '@tiptap/extension-bullet-list@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
+  '@tiptap/extension-bullet-list@2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
@@ -7360,7 +7366,7 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
-  '@tiptap/extension-ordered-list@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
+  '@tiptap/extension-ordered-list@2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
@@ -7415,7 +7421,7 @@ snapshots:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
       '@tiptap/extension-blockquote': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-bold': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-bullet-list': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-bullet-list': 2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-code': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-code-block': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
       '@tiptap/extension-document': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
@@ -7427,7 +7433,7 @@ snapshots:
       '@tiptap/extension-horizontal-rule': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
       '@tiptap/extension-italic': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-list-item': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-ordered-list': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-ordered-list': 2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-paragraph': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-strike': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-text': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
