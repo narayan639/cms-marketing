@@ -3,7 +3,7 @@ import PageTitle from "@/components/common/PageTitle";
 import Container_with_nav from "@/components/ui/Container_with_nav";
 import React, { useContext, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Camera, FileCog, KeySquare, LogOut } from "lucide-react";
+import { FileCog, KeySquare, LogOut } from "lucide-react";
 import { Phone } from "lucide-react";
 import { MapPin } from "lucide-react";
 import { Mail } from "lucide-react";
@@ -36,15 +36,12 @@ const page = () => {
           currUser ?
 
             <div className="rounded-md w-full h-max p-2 sm:p-5 flex gap-4 sm:gap-10 bg-secondary mt-2 md:mt-0 relative  -z-10">
-              <div className="circle h-[100px] sm:h-[20vw] md:h-[15vw] w-[120px] sm:w-[20vw] md:w-[15vw] relative">
+              <div className="circle h-[100px] sm:h-[20vw] md:h-[15vw] w-[120px] sm:w-[20vw] md:w-[15vw] relative cursor-pointer">
                 <Avatar className="h-full w-full">
                   <AvatarImage src={`${currUser?.profile ? currUser?.profile : "https://github.com/shadcn.png"}`} />
                   <AvatarFallback>profile</AvatarFallback>
                 </Avatar>
-                <Camera
-                  className="absolute hidden sm:block bottom-0 lg:bottom-6 right-2 p-2 rounded-full bg-secondary-foreground text-white cursor-pointer border-2"
-                  size={37}
-                />
+               
               </div>
               <div>
                 <h1 className="font-semibold sm:text-[25px] md:text-[20px] lg:text-[1.5vw] text-secondary-foreground">
@@ -125,7 +122,7 @@ const page = () => {
       </div>
       {
         currUser?.cv ?
-          <div className="mt-4">
+          <div className="mt-4 md:ml-2">
             <h1 className="font-semibold flex items-center gap-2 mb-1">My Resume <GraduationCap className="text-blue-500" /></h1>
             <div onClick={()=>setCv(currUser?.cv)} className="group hover:brightness-50 transform duration-300 ease-in-out sm:h-[400px] sm:w-[400px] overflow-hidden cursor-pointer rounded-md bg-secondary relative">
               <Scan className="absolute right-2 top-2 cursor-pointer group-hover:scale-125 duration-300 transform ease-in-out"/>
@@ -141,8 +138,8 @@ const page = () => {
         cv &&
       <div className="fixed top-0 left-0 bg-black/80 h-[100vh] w-full z-[9999999] flex items-center justify-center">
       <X className="text-white absolute top-4 right-4 cursor-pointer" onClick={()=>setCv('')}/>
-        <div className="md:h-[90vh] h-[85vh] w-[90%] sm:w-[70%] md:w-[50%] lg:w-[35%] bg-white">
-       <img src={cv} alt="cv"/>
+        <div className="md:h-[95vh] h-[85vh] w-[90%] sm:w-[70%] md:w-[50%] lg:w-[35%] bg-white">
+       <img className="h-full w-full object-contain" src={cv} alt="cv"/>
         </div>
       </div>
       }
