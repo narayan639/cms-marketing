@@ -39,7 +39,7 @@ const MyBusiness_team: React.FC<TeamProps> = () => {
     {
       team?.length>0 ?
     
-    <Table className="border-2 rounded-[10px]">
+    <Table className="rounded-[10px]">
       <TableHeader>
         <TableRow>
           <TableHead className="font-semibold text-ghost">SN</TableHead>

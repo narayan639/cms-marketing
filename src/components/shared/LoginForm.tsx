@@ -24,7 +24,6 @@ export default function LoginForm() {
     onSuccess: (data) => {
       route.push("/")
       toast.success(data?.message)
-      console.log("login user",data.user)
       setCurrUser(data?.user)
     },
     onError: (error: any) => {
@@ -35,7 +34,6 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<loginSchemaType> = (data) => mutation.mutate(data)
 
-  console.log(currUser)
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

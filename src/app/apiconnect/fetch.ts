@@ -4,10 +4,7 @@ import { getToken } from "./formhandler";
 const token = getToken();
 const headers = {
     headers: {
-        Authorization: `Bearer ${token}`,
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Expires': '0',
+        Authorization: `Bearer ${token}`
     },
 
 }

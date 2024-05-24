@@ -36,7 +36,6 @@ export async function POST(req: NextRequest) {
     }
 
     const populatedUser = await User.findById(user._id).populate('team').populate('dailylog')
-    console.log(populatedUser)
 
     const tokendata = {
       id: populatedUser._id,

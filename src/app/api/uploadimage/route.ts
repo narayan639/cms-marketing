@@ -5,7 +5,6 @@ export const POST=async(req: NextRequest)=>{
    const formdata=await req.formData()
 
    const image=formdata.get('image') as unknown as File;
-   console.log(image)
 
    const data: any=await Uploadimage(image,"Folder x")
 

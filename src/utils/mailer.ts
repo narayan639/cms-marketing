@@ -44,7 +44,6 @@ export const Sendmail = async ({
     const mailresponse = await transporter.sendMail(mailOption);
     return mailresponse;
   } catch (error: any) {
-    console.log("message not send");
     throw new Error(error.message);
   }
 };

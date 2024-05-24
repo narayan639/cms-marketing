@@ -24,7 +24,6 @@ interface Myself {
 const MyBusiness_self: React.FC<Myself> = () => {
   const { currUser,isLoading } = useContext(UserContext);
 
-  console.log(isLoading)
   
   const verify_daily_log = currUser?.dailylog.filter((i: any) => i?.is_verify === "verify");
 
@@ -39,7 +38,7 @@ const MyBusiness_self: React.FC<Myself> = () => {
   !isLoading ?
 
 
-    <Table className="border-2 rounded-[10px]">
+    <Table className=" rounded-[10px]">
       <TableHeader>
         <TableRow>
           <TableHead className="font-semibold text-ghost text-nowrap">SN</TableHead>

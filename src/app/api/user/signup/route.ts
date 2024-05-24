@@ -113,7 +113,6 @@ export async function PUT(req: NextRequest) {
         }
         
         const user = await User.findOne({ _id: userid })
-        console.log("uu",user)
 
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 400 });

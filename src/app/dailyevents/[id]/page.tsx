@@ -18,7 +18,6 @@ export default function Page() {
     
     useEffect(() => {
       if (log_id && log_id.length === 24) {
-        console.log("lnj",log_id?.length)
         mutation.mutate({ data: { log_id } });
       } else {
         route.push('/not-found');

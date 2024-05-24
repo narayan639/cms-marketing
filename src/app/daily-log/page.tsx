@@ -96,7 +96,6 @@ export default function Page() {
       );
       setFinallog(logs_date_this_week)
 
-      console.log("this week", logs_date_this_week)
 
     } else if (sortCriteria === "Last week") {
       const startOfLastWeek = moment().subtract(1, 'week').startOf('week').format('YYYY-MM-DD');

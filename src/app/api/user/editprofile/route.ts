@@ -28,11 +28,9 @@ export async function PUT(req: NextRequest) {
         }
 
         const user = await User.findById(decoded?.id);
-        console.log(user)
         if (!user) {
             return NextResponse.json({ message: "user not found" }, { status: 400 });
         }
-        console.log(user._id == userid)
         if (user._id == userid || user.isAdmin) {
 
             const currUser = await User.findById(userid)
