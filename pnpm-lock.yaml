@@ -86,6 +86,9 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.16.0
         version: 8.16.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tiptap/extension-heading':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-underline':
         specifier: ^2.3.1
         version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
@@ -2129,8 +2132,8 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
-  '@tiptap/extension-heading@2.3.1':
-    resolution: {integrity: sha512-epdIrg1xpuk5ApnNyM/NJO1dhVZgD7kDPem6QH4fug5UJtCueze942yNzUhCuvckmIegfdferAb1p4ug4674ig==}
+  '@tiptap/extension-heading@2.4.0':
+    resolution: {integrity: sha512-fYkyP/VMo7YHO76YVrUjd95Qeo0cubWn/Spavmwm1gLTHH/q7xMtbod2Z/F0wd6QHnc7+HGhO7XAjjKWDjldaw==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
@@ -7335,7 +7338,7 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
-  '@tiptap/extension-heading@2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
+  '@tiptap/extension-heading@2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))':
     dependencies:
       '@tiptap/core': 2.3.1(@tiptap/pm@2.3.1)
 
@@ -7419,7 +7422,7 @@ snapshots:
       '@tiptap/extension-dropcursor': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
       '@tiptap/extension-gapcursor': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
       '@tiptap/extension-hard-break': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
-      '@tiptap/extension-heading': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
+      '@tiptap/extension-heading': 2.4.0(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))
       '@tiptap/extension-history': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
       '@tiptap/extension-horizontal-rule': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
       '@tiptap/extension-italic': 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))

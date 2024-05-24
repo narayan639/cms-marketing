@@ -5,15 +5,10 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const isPublicpath = path === "/login";
-  const isAdminPath = path == "/admin" || path === "/admin/employeelist";
-  const isEmployeePath = path == "/employee" || path === "/employee/profile";
 
   const token = request.cookies.get("token")?.value || "";
   
-  console.log(token)
-  const decodedToken = jwt.decode(token) as JwtPayload; // Casting to JwtPayload
 
-  const isAdmin = decodedToken?.isAdmin;
 
   if (isPublicpath && token) {
       return NextResponse.redirect(new URL("/", request.url));
@@ -36,6 +31,8 @@ export const config = {
     "/teams",
     "/business",
     "/payout-menu",
-    "/settings"
+    "/settings",
+    "/editprofile",
+    "/dailyevents"
   ],
 };
