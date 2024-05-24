@@ -36,14 +36,10 @@ export const getEmails = async () => {
 
 export const getDailylogs = async () => {
     try {
-        const res = await axios.get("/api/dailylog/getall", {
-            headers: {
-              'Cache-Control': 'no-cache',
-              'Pragma': 'no-cache',
-              'Expires': '0',
-            },
+        const res = await fetch("/api/dailylog/getall", {
+            "cache":"no-store"
           });
-        return res;
+        return await res.json()
     } catch (error) {
         console.error('Error fetching daily logs:', error);
         return null;

@@ -83,10 +83,9 @@ export default function Page() {
   const searchParams = useSearchParams()
   const { data: Allogs } = useQuery("logs", getDailylogs)
   const { currUser } = useContext(UserContext)
-  const logsToDisplay = currUser?.isAdmin === true ? Allogs?.data?.dailylog : currUser?.dailylog;
+  const logsToDisplay = currUser?.isAdmin === true ? Allogs?.dailylog : currUser?.dailylog;
   const [finallog, setFinallog] = useState<Idailylog[]>([]);
   const search = searchParams.get('query')
-
 
 
   // search fun
