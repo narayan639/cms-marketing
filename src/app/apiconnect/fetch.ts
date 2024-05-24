@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const headers = {
-  'Cache-Control': 'no-cache, no-store, must-revalidate',
-  'Pragma': 'no-cache',
-  'Expires': '0'
+    'Cache-Control': 'no-store'
 };
 
 export const getUsers = async () => {
@@ -28,7 +26,9 @@ export const getEmails = async () => {
 
 export const getDailylogs = async () => {
     try {
-        const res = await axios.get("/api/dailylog/getall", { headers });
+        const res = await axios.get("/api/dailylog/getall", {
+            headers
+        });
         return res;
     } catch (error) {
         console.error('Error fetching daily logs:', error);

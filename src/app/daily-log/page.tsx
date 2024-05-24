@@ -77,7 +77,6 @@ const sort_events = [
 export default function Page() {
   const [setdata, setSetdata] = useState(true)
   const router = useRouter();
-  const [events, setEvents] = useState<EventData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9);
   const [sortCriteria, setSortCriteria] = useState("");
@@ -87,6 +86,7 @@ export default function Page() {
   const logsToDisplay = currUser?.isAdmin === true ? Allogs?.data?.dailylog : currUser?.dailylog;
   const [finallog, setFinallog] = useState<Idailylog[]>([]);
   const search = searchParams.get('query')
+
 
 
   // search fun
