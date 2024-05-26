@@ -40,8 +40,7 @@ const page = () => {
   });
 
   const { data: email, refetch: refetchUsersemail } = useQuery("emails", getEmails);
-  const { refetch: refetchUsers } = useQuery("currentUser", fetchUser);
-
+const {handleRefetchUser} =useContext(UserContext)
   const filteredEmails = email?.data.emails.filter((email: string) => email !== currUser?.email);
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -63,7 +62,7 @@ const page = () => {
     onSuccess: (data) => {
       toast.success(data?.message);
       refetchUsersemail();
-      refetchUsers();
+      handleRefetchUser();
     },
     onError: (error: any) => {
       toast.error(error?.message);

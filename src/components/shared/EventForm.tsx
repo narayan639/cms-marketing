@@ -24,21 +24,14 @@ import { useRouter } from "next/navigation";
 import eventFormSchema from "@/lib/validator";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { addDailylog } from "@/app/apiconnect/formhandler";
-import { getDailylogs } from "@/app/apiconnect/fetch";
-import { fetchUser } from "@/contextapi/userdetail/userContextProvider";
-import { IUser } from "@/type";
 import UserContext from "@/contextapi/userdetail/UserContext";
 
 export default function EventForm() {
   const router = useRouter()
- 
-  const { data: userinfo, error, isLoading, refetch: refetchUser } = useQuery<IUser | null>(
-    'currentUser',
-    fetchUser
-  );
-  const {setCurrUser}=useContext(UserContext)
+
+  const {handleRefetchUser}=useContext(UserContext)
   
   const form = useForm({
     resolver: zodResolver(eventFormSchema),
@@ -55,10 +48,10 @@ export default function EventForm() {
       remarks: "",
     },
   });
-console.log("fg", userinfo)
   const mutation = useMutation(addDailylog, {
     onSuccess: (data) => {
       toast.success(data?.message)
+      handleRefetchUser()
       router.push("/daily-log")
     },
     onError: (error: any) => {

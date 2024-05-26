@@ -57,7 +57,7 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
   const [allmunicipility, setAllmunicipility] = useState<string[]>([]);
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
-  const { currUser } = useContext(UserContext)
+  const { currUser, handleRefetchUser } = useContext(UserContext)
   const { refetch: refatchUser } = useQuery(
     'currentUser',
     fetchUser

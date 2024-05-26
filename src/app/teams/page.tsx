@@ -49,10 +49,7 @@ const page = () => {
   const[image,setImage]=useState<File | null>(null)
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
-  const { refetch: refatchUser } = useQuery(
-    'currentUser',
-    fetchUser
-);  
+  const {handleRefetchUser}=useContext(UserContext)
   const {
     data: user,
     error,
@@ -70,28 +67,13 @@ const page = () => {
     reset
   } = useForm<myteamSchemaType>({ resolver: zodResolver(myteamSchema) });
 
-
-  // useEffect(() => {
-  //   const districtNames = district_list({ pro: province });
-  //   if (districtNames) {
-  //     setAlldistrict(districtNames);
-  //   }
-  //   const municipality = municipility_list({
-  //     province: province,
-  //     district: district,
-  //   });
-  //   if (municipality) {
-  //     setAllmunicipility(municipality);
-  //   }
-  // }, [province, district]);
-
   const mutation = useMutation(addTeam, {
     onSuccess: (data) => {
       toast.success(data?.message)
       reset()
       setOpen(false)
       refetchUsers()
-      refatchUser()
+      handleRefetchUser()
     },
     onError: (error: any) => {
       toast.error(error?.message)
