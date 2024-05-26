@@ -1,3 +1,4 @@
+"use client"
 import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
@@ -24,7 +25,6 @@ import { MdOutlineVerified } from "react-icons/md";
 import { myteamSchema, myteamSchemaType } from "@/app/Schema/myteam.schema";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { district_list, municipility_list, province_list } from "@/app/Country_data/countryData";
 import Errors from "../ui/errors";
 import { useMutation, useQuery } from "react-query";
 import { delete_user, profileupdate, verify_user } from "@/app/apiconnect/formhandler";
@@ -46,25 +46,20 @@ type Teamdetail = {
   addby: string
 };
 
-interface myteams {
+type myteams ={
   myteams: Teamdetail[];
   status: string;
   isLoading: boolean
 }
-const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
-  const [curUser, setCurUser] = useState<IUserx[]>([])
-  const [alldistrict, setAlldistrict] = useState<string[]>([]);
-  const [allmunicipility, setAllmunicipility] = useState<string[]>([]);
-  const [province, setProvince] = useState("");
-  const [district, setDistrict] = useState("");
+const Myteamtable = ({ myteams, status, isLoading }: myteams) => {
+  const [selectuser, setselectuser] = useState<IUserx[]>([])
+  const [open,setOpen]=useState(false)
   const { currUser, handleRefetchUser } = useContext(UserContext)
   const { refetch: refatchUser } = useQuery(
     'currentUser',
     fetchUser
   );
   const route=useRouter()
-
-
   const {
     data: Allusers,
     refetch: refetchUsers
@@ -72,21 +67,33 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<myteamSchemaType>({ resolver: zodResolver(myteamSchema) });
 
-  const Getcurruser = (email: string) => {
+  useEffect(() => {
+    if (selectuser.length > 0) {
+      setValue("name", selectuser[0]?.name || "");
+      setValue("email", selectuser[0]?.email || "");
+      setValue("phone", selectuser[0]?.phone || "");
+    }
+  }, [selectuser, setValue]);
 
-    const findcrruser = Allusers?.data?.users.filter((i: any) => i.email === email)
-    setCurUser(findcrruser)
 
-  }
+  const Getcurruser = (id: string) => {
+    const findcrruser = Allusers?.data?.users.filter((i: any) => i._id === id);
+    setselectuser(findcrruser);
+  };
+  
+  console.log("se",selectuser)
 
 
   const mutation = useMutation(profileupdate, {
     onSuccess: (data) => {
       toast.success(data?.message)
       refetchUsers()
+      setselectuser([])
+      setOpen(false)
     },
     onError: (error: any) => {
       toast.error(error?.message)
@@ -97,7 +104,7 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
 
   const update_teams: SubmitHandler<myteamSchemaType> = (data) => {
     const payload = {
-      userid: curUser[0]?._id,
+      userid: selectuser[0]?._id,
       name: data.name,
       email: data.email,
       phone: data.phone,
@@ -106,19 +113,6 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
     mutation.mutate({ data: payload })
   };
 
-  useEffect(() => {
-    const districtNames = district_list({ pro: province });
-    if (districtNames) {
-      setAlldistrict(districtNames);
-    }
-    const municipality = municipility_list({
-      province: province,
-      district: district,
-    });
-    if (municipality) {
-      setAllmunicipility(municipality);
-    }
-  }, [province, district]);
 
   const muatation = useMutation(verify_user, {
     onSuccess: (data) => {
@@ -282,12 +276,13 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                           </span>
                             }
 
-                          {status === "pending" && currUser?.isAdmin === true && (
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <span className="group" onClick={() => Getcurruser(item.email)}>
+                          {status === "pending" && currUser?.isAdmin === true &&(
+                            <Dialog open={open} onOpenChange={setOpen}>
+                              <DialogTrigger >
+                                <span className="group" onClick={() => Getcurruser(item?._id)}>
                                   <SquarePen
                                     size={35}
+                                    
                                     className="cursor-pointer border-[1px] hover:bg-secondary p-2 rounded-md text-[20px] text-ghost"
                                   />
 
@@ -296,6 +291,8 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                                   </p>
                                 </span>
                               </DialogTrigger>
+                             
+                              
                               <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
                                   <DialogTitle>Edit Team member Information</DialogTitle>
@@ -312,7 +309,7 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                                         id="name"
                                         className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                                         {...register("name")}
-                                        defaultValue={curUser[0]?.name}
+                                        defaultValue={selectuser[0]?.name}
                                         placeholder="Eg: Hari lal yadav"
                                       />
                                       <Errors error={errors.name?.message} />
@@ -326,7 +323,7 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                                         id="Email"
                                         className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                                         {...register("email")}
-                                        defaultValue={curUser[0]?.email}
+                                        defaultValue={selectuser[0]?.email}
                                         placeholder="Eg: jhondoe@gmail.com"
                                       />
                                       <Errors error={errors.email?.message} />
@@ -340,7 +337,7 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                                         <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
                                         <Input
                                           type="text" {...register("phone")}
-                                          defaultValue={curUser[0]?.phone}
+                                          defaultValue={selectuser[0]?.phone}
                                           className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0" />
                                       </div>
                                       <Errors error={errors.phone?.message} />
@@ -350,13 +347,14 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                                   </div>
 
                                   <DialogFooter>
-                                    <Button type="submit">Save change</Button>
+                                    <Button type="submit" disabled={mutation.isLoading}>Save change</Button>
 
                                   </DialogFooter>
                                 </form>
 
 
                               </DialogContent>
+                  
                             </Dialog>
                           )}
 
