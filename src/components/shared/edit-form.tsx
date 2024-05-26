@@ -37,7 +37,7 @@ export default function EditForm({ currentlog }: {currentlog: EventData}) {
   const mutation = useMutation(logupdate, {
     onSuccess: (data) => {
       toast.success(data?.message)
-      reset()
+      router.push("/daily-log")
     },
     onError: (error: any) => {
       toast.error(error?.message)

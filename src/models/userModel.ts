@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema({
    },
    address: {
       type: String,
-      required: true
    },
    user_status: {
       type: String,
@@ -43,6 +42,10 @@ const userSchema = new mongoose.Schema({
       type: [mongoose.Schema.Types.ObjectId],
       ref: "users"
    },
+   addby: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users'
+   },
    dailylog:{
       type: [mongoose.Schema.Types.ObjectId],
       ref: Dailylog.modelName,
@@ -50,7 +53,6 @@ const userSchema = new mongoose.Schema({
    forgotPasswordToken: String,
    forgotPasswordTokenExpiry: Date
 }, {timestamps: true});
-
 
 
 export const User = mongoose.models.users || mongoose.model("users", userSchema);

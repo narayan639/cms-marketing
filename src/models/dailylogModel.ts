@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
+import {User} from "./userModel"
+
 
 const dailylogSchema = new mongoose.Schema({
+  
    date: {
       type: Date,
       required: true,
@@ -44,7 +47,11 @@ const dailylogSchema = new mongoose.Schema({
       type: String,
       enum: ["verify", "not verify"],
       default: "not verify"
-   }
+   },
+   addby:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users"
+   },
   
 }, {timestamps: true});
 

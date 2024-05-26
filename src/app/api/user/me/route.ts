@@ -20,10 +20,20 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: "Session expired" }, { status: 401 });
     }
     const user = await User.findById(decoded?.id).populate({
-        path: 'team',
-        populate: {
-          path: 'dailylog'}
-      }).populate('dailylog')
+      path: 'team',
+      populate: [
+        {
+          path: 'dailylog'
+        },
+        {
+          path: 'team',
+          populate: {
+            path: 'dailylog'
+          }
+        }
+      ]
+    })
+    .populate('dailylog');
     
     
     if (!user) {

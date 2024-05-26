@@ -9,29 +9,33 @@ connect();
 
 export async function GET(req: NextRequest) {
   try {
-    const header = headers()
-        const btoken = header.get("Authorization")
-        if (!btoken) {
-            return NextResponse.json({ message: "Bearer token not define" }, { status: 400 })
-        }
-        
-        const token = btoken.split(' ').pop()
-        
-        const decoded: any = jwt.verify(token!, process.env.TOKEN_SECRET!);
-        
-        if (!decoded) {
-            return NextResponse.json({ message: "Session expire" })
-        }
-        
-        const user = await User.findById(decoded?.id);
-        
-        if (!user) {
-            return NextResponse.json({ message: "user not found" }, { status: 400 });
-        }
-    const dailylog = await Dailylog.find()
-    return NextResponse.json({dailylog})
+    const header = headers();
+    const btoken = header.get("Authorization");
+    if (!btoken) {
+      return NextResponse.json({ message: "Bearer token not defined" }, { status: 400 });
+    }
+
+    const token = btoken.split(' ').pop();
+
+    const decoded: any = jwt.verify(token!, process.env.TOKEN_SECRET!);
+
+    if (!decoded) {
+      return NextResponse.json({ message: "Session expired" });
+    }
+
+    const user = await User.findById(decoded?.id);
+
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 400 });
+    }
+
+    const dailylog = await Dailylog.find().sort({ createdAt: -1 }).populate({
+      path: 'addby',
+      select: 'name email phone _id'
+    });
+
+    return NextResponse.json({ dailylog });
   } catch (error: any) {
-    return NextResponse.json({ mesage: error.mesage }, { status: 500 });
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
-

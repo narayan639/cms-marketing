@@ -1,33 +1,36 @@
 /** @format */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Nav } from "../ui/nav";
-
-
-type Props = {};
-
+import { useWindowWidth } from "@react-hook/window-size";
+import UserContext from "@/contextapi/userdetail/UserContext";
 import {
   HandCoins,
   LayoutDashboard,
   UsersRound,
-  Settings,
-  ChevronRight,
   CalendarPlus,
   Handshake,
   Building2,
+  LucideIcon,
 } from "lucide-react";
 
-import { Button } from "../ui/button";
+type NavLink = {
+  title: string;
+  href: string;
+  icon: LucideIcon;
+  variant: "default" | "ghost";
+};
 
-import { useWindowWidth } from "@react-hook/window-size";
+type Props = {};
 
 export default function SideNavbar({}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mobile_Width, setmobile_Width] = useState(false);
   const [mobilewidth_for_burger, setmobilewidth_for_burger] = useState(false);
-
+  const { currUser } = useContext(UserContext);
   const onlyWidth = useWindowWidth();
+
   useEffect(() => {
     const mobileWidth = onlyWidth < 868;
     const mobileWidth_for_burger_nav = onlyWidth < 763;
@@ -37,8 +40,58 @@ export default function SideNavbar({}: Props) {
       : setmobilewidth_for_burger(false);
   }, [onlyWidth]);
 
-  function toggleSidebar() {
-    setIsCollapsed(!isCollapsed);
+
+
+  const links: NavLink[] = [
+    {
+      title: "Dashboard",
+      href: "/",
+      icon: LayoutDashboard,
+      variant: "default",
+    },
+    {
+      title: "Profile",
+      href: "/profile",
+      icon: UsersRound,
+      variant: "ghost",
+    },
+    {
+      title: "Daily Log",
+      href: "/daily-log",
+      icon: CalendarPlus,
+      variant: "ghost",
+    },
+    {
+      title: "Teams",
+      href: "/teams",
+      icon: Handshake,
+      variant: "ghost",
+    },
+  ];
+
+  if (currUser && !currUser.isAdmin) {
+    links.push({
+      title: "Business",
+      href: "/business",
+      icon: Building2,
+      variant: "ghost",
+    });
+  }
+  if (currUser && currUser.isAdmin) {
+    links.push({
+      title: "Business",
+      href: "/myteambusiness",
+      icon: Building2,
+      variant: "ghost",
+    });
+  }
+  if (currUser && !currUser.isAdmin) {
+    links.push({
+      title: "Payout",
+      href: "/payout-menu",
+      icon: HandCoins,
+      variant: "ghost",
+    });
   }
 
   return (
@@ -55,76 +108,14 @@ export default function SideNavbar({}: Props) {
               <h1 className="font-bold text-ghost">Metalogic</h1>
             )}
           </div>
-          {!mobile_Width && (
-            <div className="absolute right-[-20px] bottom-[50px] z-[999]">
-              <Button
-                onClick={toggleSidebar}
-                variant="secondary"
-                className=" rounded-full p-2 bg-blue-800 hover:bg-blue-600 text-white relative z-[99999]"
-              >
-                <ChevronRight
-                  className={`${
-                    isCollapsed
-                      ? "rotate-[0deg] transform duration-500 ease-in-out"
-                      : "rotate-[180deg] transform duration-500 ease-in-out"
-                  }`}
-                />
-              </Button>
-            </div>
-          )}
+          
           <div></div>
           <Nav
             isCollapsed={mobile_Width ? true : isCollapsed}
-            links={[
-              {
-                title: "Dashboard",
-                href: "/",
-                icon: LayoutDashboard,
-                variant: "default",
-              },
-              {
-                title: "Profile",
-                href: "/profile",
-                icon: UsersRound,
-                variant: "ghost",
-              },
-              {
-                title: "Daily Log",
-                href: "/daily-log",
-                icon: CalendarPlus,
-                variant: "ghost",
-              },
-              {
-                title: "My Teams",
-                href: "/teams",
-                icon: Handshake,
-                variant: "ghost",
-              },
-              {
-                title: "My Business",
-                href: "/business",
-                icon: Building2,
-                variant: "ghost",
-              },
-              {
-                title: "Payout Menu",
-                href: "/payout-menu",
-                icon: HandCoins,
-                variant: "ghost",
-              },
-              {
-                title: "Settings",
-                href: "/settings",
-                icon: Settings,
-                variant: "ghost",
-              },
-            ]}
+            links={links}
           />
         </div>
-      ) : (
-        null
-        
-      )}
+      ) : null}
     </>
   );
 }

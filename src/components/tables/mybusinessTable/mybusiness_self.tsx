@@ -18,21 +18,20 @@ type Selfdetail = {
 };
 
 interface Myself {
-  myselfadd: Selfdetail[];
+  currUser_log: Selfdetail[];
+  isLoading: boolean
 }
 
-const MyBusiness_self: React.FC<Myself> = () => {
-  const { currUser,isLoading } = useContext(UserContext);
+const MyBusiness_self: React.FC<Myself> = ({currUser_log, isLoading}) => {
 
-  
-  const verify_daily_log = currUser?.dailylog.filter((i: any) => i?.is_verify === "verify");
-
-  // Calculate all amounts and total incentives
-  const all_amount = verify_daily_log?.map((item: any) => Number(item?.budget)) || [];
+  const all_amount = currUser_log?.map((item: any) => Number(item?.budget)) || [];
   const sum = all_amount.reduce((acc, num) => acc + num, 0);
   const total_insen_amt = (sum * 10) / 100;
 
   return (
+<>
+{
+  currUser_log?.length >0?
 <>
 {
   !isLoading ?
@@ -41,15 +40,15 @@ const MyBusiness_self: React.FC<Myself> = () => {
     <Table className=" rounded-[10px]">
       <TableHeader>
         <TableRow>
-          <TableHead className="font-semibold text-ghost text-nowrap">SN</TableHead>
-          <TableHead className="font-semibold text-ghost text-nowrap">Company</TableHead>
-          <TableHead className="font-semibold text-ghost text-nowrap">Budget</TableHead>
-          <TableHead className="font-semibold text-ghost text-nowrap">Incentive</TableHead>
-          <TableHead className="font-semibold text-ghost text-nowrap">Date</TableHead>
+          <TableHead className=" text-nowrap">SN</TableHead>
+          <TableHead className=" text-nowrap">Company</TableHead>
+          <TableHead className=" text-nowrap">Budget</TableHead>
+          <TableHead className=" text-nowrap text-right">Incentive</TableHead>
+          <TableHead className=" text-nowrap text-right">Date</TableHead>
         </TableRow>
       </TableHeader>
 
-      {verify_daily_log?.map((item: any, index: number) => {
+      {currUser_log?.map((item: any, index: number) => {
         const insentive_amt = (item.budget * 10) / 100;
         const date = moment(item?.date).format('ll');
 
@@ -58,23 +57,26 @@ const MyBusiness_self: React.FC<Myself> = () => {
             <TableCell className="text-nowrap">{index + 1}</TableCell>
             <TableCell className="text-nowrap">{item.company_name}</TableCell>
             <TableCell className="text-nowrap">Rs {parseInt(item.budget).toLocaleString('en-US')}</TableCell>
-            <TableCell className="text-nowrap">Rs {insentive_amt.toLocaleString('en-US')}</TableCell>
-            <TableCell className="text-nowrap">{date}</TableCell>
+            <TableCell className="text-nowrap text-right">Rs {insentive_amt.toLocaleString('en-US')}</TableCell>
+            <TableCell className="text-nowrap text-right">{date}</TableCell>
           </TableBody>
         );
       })}
-      <TableFooter className="bg-transparent">
+      <TableFooter className="">
         <TableRow>
           <TableCell colSpan={2}>Total</TableCell>
           <TableCell className="text-nowrap">Rs {sum.toLocaleString('en-US')}</TableCell>
-          <TableCell className="text-nowrap">Rs {total_insen_amt.toLocaleString('en-US')}</TableCell>
+          <TableCell className="text-nowrap text-right">Rs {total_insen_amt.toLocaleString('en-US')}</TableCell>
+          <TableCell className="text-nowrap"></TableCell>
         </TableRow>
       </TableFooter>
     </Table>:
-
-    <p>load</p>
+    <p>Data Fetching!</p>
   
   }
+  </>:
+  <p className="py-2">No data found!</p>
+}
 
 </>
 

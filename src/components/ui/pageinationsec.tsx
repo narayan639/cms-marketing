@@ -2,7 +2,6 @@ import React from 'react'
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -30,17 +29,17 @@ const Pageinationsection = ({ itemsperpage, currentpage, totalitem, setCurrentpa
         <>
         {
      totalitem>0 &&
-        <Pagination>
-            <PaginationContent>
-                <PaginationItem>
-                    <PaginationPrevious onClick={() => handlepre()} className='cursor-pointer'/>
+        <Pagination className='flex justify-end'>
+            <PaginationContent className=''>
+                <PaginationItem >
+                    <PaginationPrevious onClick={() => handlepre()} className='bg-primary text-white hover:bg-blue-800 hover:text-white cursor-pointer'/>
                 </PaginationItem>
-                <PaginationItem className='flex'>
+                <PaginationItem className='flex gap-1'>
 
                     {
                         pages.map((page, index) => (
-                            <PaginationItem key={index} className={`${currentpage === page ? "text-white bg-primary rounded-lg" : ""} cursor-pointer`}>
-                                <PaginationLink onClick={() => setCurrentpage(page)}>
+                            <PaginationItem key={index}>
+                                <PaginationLink onClick={() => setCurrentpage(page)} className={`${currentpage === page ? "bg-blue-500 rounded-lg hover:bg-blue-700 cursor-pointer" : ""} cursor-pointer`}>
                                     {page}
                                 </PaginationLink>
                             </PaginationItem>
@@ -49,8 +48,8 @@ const Pageinationsection = ({ itemsperpage, currentpage, totalitem, setCurrentpa
                 </PaginationItem>
 
 
-                <PaginationItem>
-                    <PaginationNext onClick={() => handlenxt()} className='cursor-pointer'/>
+                <PaginationItem className='bg-primary text-white rounded-lg'>
+                    <PaginationNext onClick={() => handlenxt()} className='bg-primary text-white hover:bg-blue-800 hover:text-white cursor-pointer'/>
                 </PaginationItem>
             </PaginationContent>
         </Pagination>

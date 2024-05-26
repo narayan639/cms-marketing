@@ -10,6 +10,7 @@ export type IUser = {
     dailylog:[]
     profile: string
     cv: string
+    addby: string
 };
 export type IUserx = {
     name: string;
@@ -29,4 +30,5 @@ export type Idailylog={
      date: string
      time: string
      budget: string
+     createdAt: string
 }

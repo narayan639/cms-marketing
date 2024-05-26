@@ -59,10 +59,13 @@ const page = () => {
                     <Phone size={15} />
                     <p>{currUser?.phone}</p>
                   </span>
+                  {
+                    currUser?.address &&
                   <span className="flex items-center gap-2">
                     <MapPin size={15} />
                     <p>{currUser?.address}</p>
                   </span>
+                  }
                   <span className="flex items-center gap-2">
                     <Mail size={15} />
                     <p>{currUser?.email}</p>
@@ -121,7 +124,11 @@ const page = () => {
 
       </div>
       {
-        currUser?.cv ?
+        currUser?.isAdmin ===false &&
+        <>
+        {
+
+          currUser?.cv ?
           <div className="mt-4 md:ml-2">
             <h1 className="font-semibold flex items-center gap-2 mb-1">My Resume <GraduationCap className="text-blue-500" /></h1>
             <div onClick={()=>setCv(currUser?.cv)} className="group hover:brightness-50 transform duration-300 ease-in-out sm:h-[400px] sm:w-[400px] overflow-hidden cursor-pointer rounded-md bg-secondary relative">
@@ -132,6 +139,8 @@ const page = () => {
 
           currUser &&
           <h1 className="mt-4">No Resume </h1>
+        }
+          </>
 
       }
       {

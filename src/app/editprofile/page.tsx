@@ -220,13 +220,16 @@ const page = () => {
                     <p className="text-zinc-500 font-semibold">Upload Profile</p>
                   </label>
                 </section>
+                {
+                  currUser && currUser?.isAdmin === false &&
                 <section className="w-full flex flex-[0.5]">
                   <label htmlFor="cv" className="h-[20vh] relative cursor-pointer flex items-center justify-center w-full border-2 border-dashed rounded-md">
-                    <img className="h-full w-full object-contain" src={selectedFile_cv ? selectedFile_cv : currUser?.cv ? currUser?.cv : ""} alt="Upload Resume" />
+                    <img className="h-full w-full object-contain" src={selectedFile_cv ? selectedFile_cv : currUser?.cv ? currUser?.cv : "https://wallpapers.com/images/featured/blank-white-background-xbsfzsltjksfompa.jpg"} alt="" />
                     {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
                   </label>
                   <Input type="file" id="cv" className="border-2 hidden" onChange={OnChangeHandler_cv} />
                 </section>
+                }
               </div>
 
               <div className="flex gap-2 flex-col relative">

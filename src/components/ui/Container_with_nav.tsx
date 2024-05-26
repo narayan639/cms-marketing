@@ -164,29 +164,17 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
                   variant: "ghost",
                 },
                 {
-                  title: "My Teams",
+                  title: "Teams",
                   href: "/teams",
                   icon: Handshake,
                   variant: "ghost",
                 },
                 {
-                  title: "My Business",
+                  title: "Business",
                   href: "/business",
                   icon: Building2,
                   variant: "ghost",
-                },
-                {
-                  title: "Payout Menu",
-                  href: "/payout-menu",
-                  icon: HandCoins,
-                  variant: "ghost",
-                },
-                {
-                  title: "Settings",
-                  href: "/settings",
-                  icon: Settings,
-                  variant: "ghost",
-                },
+                }
               ]}
             />
           </div>

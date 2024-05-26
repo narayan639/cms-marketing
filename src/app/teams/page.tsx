@@ -71,19 +71,19 @@ const page = () => {
   } = useForm<myteamSchemaType>({ resolver: zodResolver(myteamSchema) });
 
 
-  useEffect(() => {
-    const districtNames = district_list({ pro: province });
-    if (districtNames) {
-      setAlldistrict(districtNames);
-    }
-    const municipality = municipility_list({
-      province: province,
-      district: district,
-    });
-    if (municipality) {
-      setAllmunicipility(municipality);
-    }
-  }, [province, district]);
+  // useEffect(() => {
+  //   const districtNames = district_list({ pro: province });
+  //   if (districtNames) {
+  //     setAlldistrict(districtNames);
+  //   }
+  //   const municipality = municipility_list({
+  //     province: province,
+  //     district: district,
+  //   });
+  //   if (municipality) {
+  //     setAllmunicipility(municipality);
+  //   }
+  // }, [province, district]);
 
   const mutation = useMutation(addTeam, {
     onSuccess: (data) => {
@@ -98,64 +98,13 @@ const page = () => {
     }
   })
 
-  const OnChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
-    
-    const file = e.target.files[0];
-    // Ensure that a file is selected
-    if (file) {
-      // Create a FileReader object
-      const reader = new FileReader();
-      // Define a callback function for when the file is read
-      reader.onload = () => {
-        // Set the result of reading the file as the selected file URL
-        setSelectedFile(reader.result as string);
-      };
-      // Read the file as a data URL
-      reader.readAsDataURL(file);
-    }}
-
-  }
-  
-  const onSubmitHandle = async (e: any) => {
-    e.preventDefault();
-    try {
-      if (!image) {
-        return;
-      }
-      setLoad(true)
-      const formData = new FormData();
-      formData.append('image', image);
-      const response = await axios.post("/api/uploadimage", formData);
-      const data = response.data;
-      if(data){
-        setresume(data.msg)
-        setLoad(false)
-      }
-    } catch (error: any) {
-      console.log("err", error.message);
-    }
-  }
-
-  useEffect(() => {
-    if (image) {
-      const e = { preventDefault: () => {} }; 
-      onSubmitHandle(e);
-    }
-  }, [image]);
 
 
-  const onSubmit_teams: SubmitHandler<myteamSchemaType> = (data) =>{
-    const payload={
-      ...data,
-      cv: resume ? resume : "" 
-    }
-    mutation.mutate( { data: payload })
-  } 
+
+  const onSubmit_teams: SubmitHandler<myteamSchemaType> = (data) =>mutation.mutate({data})
 
   return (
-    <Container_with_nav page_title="My Team">
+    <Container_with_nav page_title="Team">
       <div className="flex md:flex-col items-center md:items-start justify-between pb-4 md:pb-0">
         <PageTitle title="My Team" className="md:hidden" />
         <Dialog open={open} onOpenChange={setOpen}>
@@ -207,81 +156,7 @@ const page = () => {
                 </div>
                   <Errors error={errors.phone?.message} />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="Address" className="font-semibold flex">
-                    <p>Address</p>
-                    <Asterisk className="text-red-500" size={11} />
-                  </Label>
-                  <div className="grid grid-cols-3 w-full gap-1">
-                    <select
-                      {...register("address_province")}
-                      onChange={(e: any) => setProvince(e.target.value)}
-                      className="text-sm p-2 rounded-md cursor-pointer"
-                    >
-                      <option
-                        value=""
-                        className="bg-primary text-white font-semibold "
-                      >
-                        Province
-                      </option>
-                      {province_list?.map((item, index) => (
-                        <option value={item} key={item}>
-                          {item}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      {...register("address_district")}
-                      onChange={(e: any) => setDistrict(e.target.value)}
-                      className="text-sm p-2 rounded-md cursor-pointer"
-                    >
-                      <option
-                        value=""
-                        className="bg-primary text-white font-semibold "
-                      >
-                        District{" "}
-                      </option>
-                      {alldistrict?.map((item, index) => (
-                        <option value={item} key={item}>
-                          {item}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      className="text-sm p-2 rounded-md cursor-pointer"
-                      {...register("address_municipility")}
-                    >
-                      <option
-                        value=""
-                        className="bg-primary text-white font-semibold"
-                      >
-                        Municipility
-                      </option>
-                      {allmunicipility?.map((item, index) => (
-                        <option value={item} key={item}>
-                          {item}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <Errors error={errors.address_municipility?.message} />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label
-                    htmlFor="cv"
-                    className="font-semibold flex gap-1 items-center"
-                  >
-                    <p>Upload CV</p>
-                    <p className="text-gray-500"> (optional)</p>
-                  </Label>
-                  <label htmlFor="cv" className="h-[170px] relative cursor-pointer flex items-center justify-center w-full border-2 rounded-md">
-                    <img className="h-full w-full object-contain" src={`${selectedFile ? selectedFile :"https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"}`} alt="Upload Resume" />
-                   {!resume && <h1 className="font-bold absolute">Click Upload Resume</h1>}
-                  </label>
-                  <Input type="file" id="cv" className="border-2 hidden" onChange={OnChangeHandler}/>
-
-                  {/* <Errors error={errors.resume?.message} /> */}
-                </div>
+                
               </div>
 
               <DialogFooter>

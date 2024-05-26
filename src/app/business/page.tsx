@@ -1,77 +1,25 @@
 "use client";
 
 import PageTitle from "@/components/common/PageTitle";
+import Clients_detail from "@/components/tables/client-detail.table";
 import MyBusiness_self from "@/components/tables/mybusinessTable/mybusiness_self";
 import MyBusiness_team from "@/components/tables/mybusinessTable/mybusinessTable_team";
 import { Button } from "@/components/ui/button";
 import Container_with_nav from "@/components/ui/Container_with_nav";
-import { useState } from "react";
+import UserContext from "@/contextapi/userdetail/UserContext";
+import { useContext, useState } from "react";
 import { FaPerson } from "react-icons/fa6";
 import { HiUserGroup } from "react-icons/hi2";
 
-const teamData = [
-  {
-    name: "John Smith",
-    user_id: "abg543",
-    business: 75000,
-    total_client: 7,
-  },
-  {
-    name: "Emma Johnson",
-    user_id: "pqr123",
-    business: 62000,
-    total_client: 4,
-  },
-  {
-    name: "Michael Brown",
-    user_id: "xyz789",
-    business: 55000,
-    total_client: 6,
-  },
-  {
-    name: "Sarah Williams",
-    user_id: "lmn456",
-    business: 48000,
-    total_client: 3,
-  },
-  {
-    name: "David Jones",
-    user_id: "def321",
-    business: 69000,
-    total_client: 8,
-  },
-];
 
-const selfData = [
-  {
-    company_name: "ABC Corporation",
-    amount: 1500,
-    date: "2024-05-15",
-  },
-  {
-    company_name: "XYZ Industries",
-    amount: 1800,
-    date: "2024-04-28",
-  },
-  {
-    company_name: "LMN Enterprises",
-    amount: 2200,
-    date: "2024-06-03",
-  },
-  {
-    company_name: "PQR Limited",
-    amount: 1700,
-    date: "2024-05-02",
-  },
-  {
-    company_name: "DEF Group",
-    amount: 1900,
-    date: "2024-04-10",
-  },
-];
+
 
 const page = () => {
   const [status, setStatus] = useState("self");
+  const { currUser,isLoading } = useContext(UserContext);
+  const verify_daily_log = currUser?.dailylog.filter((i: any) => i?.is_verify === "verify") || []
+  const team = currUser?.team || [];
+
 
   return (
     <Container_with_nav page_title="My Business">
@@ -100,12 +48,25 @@ const page = () => {
             <HiUserGroup size={15} />
             <p className="hidden md:flex">Team</p>{" "}
           </Button>
+          <Button
+            className={` ${
+              status === "client"
+                ? "bg-primary text-white"
+                : "bg-transparent text-primary"
+            } flex gap-2 border-2 hover:text-white`}
+            onClick={() => setStatus("client")}
+          >
+            <HiUserGroup size={15} />
+            <p className="hidden md:flex">View Clients</p>{" "}
+          </Button>
         </div>
       </div>
 
       <div className="mt-2">
-        {status === "self" && <MyBusiness_self myselfadd={selfData} />}
-        {status === "team" && <MyBusiness_team teams={teamData} />}
+        {status === "self" && <MyBusiness_self currUser_log={verify_daily_log} isLoading={isLoading} />}
+        {status === "team" && <MyBusiness_team team={team} isLoading={isLoading}/>}
+        {status === "client" && <Clients_detail clients={verify_daily_log} />}
+
       </div>
     </Container_with_nav>
   );

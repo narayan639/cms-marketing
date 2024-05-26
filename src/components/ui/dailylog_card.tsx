@@ -64,23 +64,23 @@ const Dailylog_card = ({ event }: { event: any }) => {
 
   return (
     <div
-      className="w-full rounded-lg text-primary shadow-md overflow-hidden flex flex-row justify-between gap-4 bg-secondary relative"
+      className="w-full rounded-lg text-primary shadow-md overflow-hidden flex flex-row justify-between gap-4 bg-secondary relative border border-zinc-200"
     >
       {/* Event details */}
-      <div className="flex-1 bg-gradient-to-r from-blue-800 to-blue-400 rounded-lg text-white p-2">
+      <div className="flex-1 bg-gradient-to-r from-blue-800 to-blue-700 rounded-lg text-white p-2 text-sm">
         {/* Client Name */}
         <div
           title="Client name"
           className="flex items-center gap-2 mb-2 cursor-pointer"
         // onClick={() => handleEventSelection(event)}
         >
-          <UserRound className=" mr-2" size={18} />
+          <UserRound className=" mr-2" size={15} />
           <span>{event.client_name}</span>
         </div>
 
         {/* Address */}
         <div title="Address" className="flex items-center gap-2 mb-2">
-          <MapPinned className=" mr-2" size={18} />
+          <MapPinned className=" mr-2" size={15} />
           <span>{event.address}</span>
         </div>
 
@@ -89,7 +89,7 @@ const Dailylog_card = ({ event }: { event: any }) => {
           title="Phone number"
           className="flex items-center mb-2 gap-2"
         >
-          <BookUser className=" mr-2" size={18} />
+          <BookUser className=" mr-2" size={15} />
           <span>{event.phonenumber}</span>
         </div>
 
@@ -99,7 +99,7 @@ const Dailylog_card = ({ event }: { event: any }) => {
             title="Company Name"
             className="flex items-center gap-2 mb-2"
           >
-            <Warehouse className=" mr-2" size={18} />
+            <Warehouse className=" mr-2" size={15} />
             <span>{event.company_name}</span>
           </div>
         )}
@@ -110,6 +110,16 @@ const Dailylog_card = ({ event }: { event: any }) => {
          Rs
           <span>{event.budget} /-</span>
         </div>
+        {
+          currUser?.isAdmin===true &&
+        <div
+        title="Budget"
+        className="flex items-center gap-2 mb-2"
+        >
+         Post By:
+          <span className='cursor-pointer hover:underline' onClick={()=>route.push(`/user-profile/${event?.addby._id}`)}>{event?.addby.name}</span>
+        </div>
+        }
 
 
 
@@ -122,24 +132,24 @@ const Dailylog_card = ({ event }: { event: any }) => {
           {
             currUser?.isAdmin === true && event?.is_verify === "not verify" &&
             <Button className='p-1 px-2 bg-white text-black hover:bg-zinc-300' onClick={()=>verifylog(event?._id)}>
-              <MdVerified className="cursor-pointer text-green-500" size={18}  />
+              <MdVerified className="cursor-pointer text-green-500" size={15}  />
             </Button>
           }
 
           <Button className='p-1 px-2 bg-white text-black hover:bg-zinc-300'>
-            <Eye className="cursor-pointer" size={18} onClick={() => route.push(`/daily-log/${event._id}`)} />
+            <Eye className="cursor-pointer" size={15} onClick={() => route.push(`/daily-log/${event._id}`)} />
 
           </Button>
           <Button className='p-1 px-2 bg-white text-black hover:bg-zinc-300'>
 
-            <FaRegEdit size={18} className='cursor-pointer'  onClick={() => route.push(`/dailyevents/${event._id}`)}/>
+            <FaRegEdit size={15} className='cursor-pointer'  onClick={() => route.push(`/dailyevents/${event._id}`)}/>
           </Button>
 
 
           <AlertDialog>
             <AlertDialogTrigger asChild><Button className='p-1 px-2 bg-white text-black hover:bg-zinc-300'>
 
-              <Trash2 size={18} />
+              <Trash2 size={15} />
             </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -159,8 +169,8 @@ const Dailylog_card = ({ event }: { event: any }) => {
         <div className='flex justify-end text-sm'>
           {
             event?.is_verify === "verify" ?
-              <div className='p-1 rounded-lg bg-green-500 text-white font-medium w-fit px-2'>Verified</div> :
-              <div className='p-1 rounded-lg bg-red-500 text-white font-medium w-fit px-2'>Not Verify</div>
+              <div className='p-1 rounded-lg bg-green-500 text-white text-xs font-semibold w-fit px-2'>Verified</div> :
+              <div className='p-1 rounded-lg bg-red-500 text-white text-xs font-semibold w-fit px-2'>Not Verify</div>
           }
         </div>
 

@@ -37,8 +37,10 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "user not found" }, { status: 400 });
         }
 
-        const create_new_log = new Dailylog(
-            reqBody
+        const create_new_log = new Dailylog({
+            addby: user._id,
+            ...reqBody
+        }
         )
         const save_log = await create_new_log.save()
 

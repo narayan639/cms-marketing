@@ -22,11 +22,7 @@ import { getDailylogs } from "../apiconnect/fetch";
 import { Idailylog } from "@/type";
 import Dailylog_card from "@/components/ui/dailylog_card";
 import UserContext from "@/contextapi/userdetail/UserContext";
-import { LiaGripHorizontalSolid } from "react-icons/lia";
-import { MdOutlineHorizontalSplit } from "react-icons/md";
 import Pageinationsection from "@/components/ui/pageinationsec";
-
-
 const sort_events = [
   "All Daily Logs",
   "Today",
@@ -36,9 +32,7 @@ const sort_events = [
   "This Month",
   "Last Month",
 ]
-
 export default function Page() {
-  const [setdata, setSetdata] = useState(true)
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9);
@@ -49,102 +43,62 @@ export default function Page() {
   const logsToDisplay = currUser?.isAdmin === true ? Allogs?.data.dailylog : currUser?.dailylog;
   const [finallog, setFinallog] = useState<Idailylog[]>([]);
   const search = searchParams.get('query')
-
-
-  // search fun
-  useEffect(() => {
-    if (logsToDisplay) {
-      setFinallog(logsToDisplay);
-    }
-  }, [logsToDisplay])
+  const [searchby, setSearchby] = useState("client_name")
+  const [verificationStatus, setVerificationStatus] = useState('')
 
   useEffect(() => {
     if (logsToDisplay) {
-      const filteredLogs = logsToDisplay.filter((log: any) =>
-        log.client_name.toLowerCase().includes(search)
-      );
-      if (filteredLogs.length > 0) {
+      let filteredLogs = logsToDisplay;
 
-        setFinallog(filteredLogs);
-      } else {
-        setFinallog(logsToDisplay);
+      if (verificationStatus) {
+        filteredLogs = filteredLogs.filter((log: any) => log.is_verify === verificationStatus);
       }
-    }
-  }, [search, logsToDisplay]);
 
-  // Function to sort events based on date
-  const sortEventsByDate = (logs: Idailylog[]) => {
-    if(sortCriteria==="All Daily Logs"){
-      setFinallog(logs)
-    }else if (sortCriteria === "Today") {
-      // today
-      const currentDate = moment(new Date()).format('YYYY-MM-DD');
-      const logs_date = logs.filter((i: any) => moment(i.date).format('YYYY-MM-DD') === currentDate)
-      setFinallog(logs_date)
+      if (search) {
+        filteredLogs = filteredLogs.filter((log: any) =>
+          log[searchby]?.toLowerCase().includes(search.toLowerCase())
+        );
+      }
 
-    } else if (sortCriteria === "Yesterday") {
-      const yesterdayDate = moment().subtract(1, 'day').format('YYYY-MM-DD');
-      const logs_date_yesterday = logs.filter((i: any) => moment(i.date).format('YYYY-MM-DD') === yesterdayDate);
-      setFinallog(logs_date_yesterday)
-    } else if (sortCriteria === "This week") {
-      const startOfWeek = moment().startOf('week').format('YYYY-MM-DD');
-      const endOfWeek = moment().add(7, 'days').format('YYYY-MM-DD');
+      if (sortCriteria === "Today") {
+        const currentDate = moment().format('YYYY-MM-DD');
+        filteredLogs = filteredLogs.filter((log: any) => moment(log.date).format('YYYY-MM-DD') === currentDate);
+      } else if (sortCriteria === "Yesterday") {
+        const yesterdayDate = moment().subtract(1, 'day').format('YYYY-MM-DD');
+        filteredLogs = filteredLogs.filter((log: any) => moment(log.date).format('YYYY-MM-DD') === yesterdayDate);
+      } else if (sortCriteria === "This week") {
+        const startOfWeek = moment().startOf('week').format('YYYY-MM-DD');
+        const endOfWeek = moment().endOf('week').format('YYYY-MM-DD');
+        filteredLogs = filteredLogs.filter((log: any) =>
+          moment(log.date).isBetween(startOfWeek, endOfWeek, null, '[]')
+        );
+      } else if (sortCriteria === "Last week") {
+        const startOfLastWeek = moment().subtract(1, 'week').startOf('week').format('YYYY-MM-DD');
+        const endOfLastWeek = moment().subtract(1, 'week').endOf('week').format('YYYY-MM-DD');
+        filteredLogs = filteredLogs.filter((log: any) =>
+          moment(log.date).isBetween(startOfLastWeek, endOfLastWeek, null, '[]')
+        );
+      } else if (sortCriteria === "This Month") {
+        const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
+        const endOfMonth = moment().endOf('month').format('YYYY-MM-DD');
+        filteredLogs = filteredLogs.filter((log: any) =>
+          moment(log.date).isBetween(startOfMonth, endOfMonth, null, '[]')
+        );
+      } else if (sortCriteria === "Last Month") {
+        const startOfLastMonth = moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD');
+        const endOfLastMonth = moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD');
+        filteredLogs = filteredLogs.filter((log: any) =>
+          moment(log.date).isBetween(startOfLastMonth, endOfLastMonth, null, '[]')
+        );
+      }
 
-      // Filter data for this week
-      const logs_date_this_week = logs.filter((i: any) =>
-        moment(i.date).isBetween(startOfWeek, endOfWeek, null, '[]')
+      filteredLogs = filteredLogs.sort((a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
-      setFinallog(logs_date_this_week)
 
-
-    } else if (sortCriteria === "Last week") {
-      const startOfLastWeek = moment().subtract(1, 'week').startOf('week').format('YYYY-MM-DD');
-      const endOfLastWeek = moment().subtract(1, 'week').endOf('week').format('YYYY-MM-DD');
-
-      // Filter data for last week
-      const logs_date_last_week = logs.filter((i: any) =>
-        moment(i.date).isBetween(startOfLastWeek, endOfLastWeek, null, '[]')
-      );
-      setFinallog(logs_date_last_week)
-    } else if (sortCriteria === "This Month") {
-      const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
-      const endOfMonth = moment().endOf('month').format('YYYY-MM-DD');
-
-      // Filter data for this month
-      const logs_date_this_month = logs.filter((i: any) =>
-        moment(i.date).isBetween(startOfMonth, endOfMonth, null, '[]')
-    );
-    setFinallog(logs_date_this_month)
-    } else if (sortCriteria === "Last Month") {
-      const startOfLastMonth = moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD');
-      const endOfLastMonth = moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD');
-
-      // Filter data for last month
-      const logs_date_last_month = logs.filter((i: any) =>
-        moment(i.date).isBetween(startOfLastMonth, endOfLastMonth, null, '[]')
-      );
-      setFinallog(logs_date_last_month)
+      setFinallog(filteredLogs);
     }
-
-
-   
-
-
-
-
-
-  };
-
-
-  useEffect(() => {
-    if (logsToDisplay) {
-     sortEventsByDate(logsToDisplay);
-    }
-  }, [sortCriteria, logsToDisplay]);
-
-
-
-
+  }, [verificationStatus, search, searchby, sortCriteria, logsToDisplay]);
 
 
 
@@ -152,27 +106,51 @@ export default function Page() {
   const handleSortChange = (newSortCriteria: string) => {
     setSortCriteria(newSortCriteria);
   };
+  // Calculate the index of the first and last items on the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = finallog.slice(indexOfFirstItem, indexOfLastItem)
 
-     // Calculate the index of the first and last items on the current page
-     const indexOfLastItem = currentPage * itemsPerPage;
-     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  
-     const currentItems=finallog.slice(indexOfFirstItem,indexOfLastItem)
-  
   return (
     <Container_with_nav page_title="Events">
-      <div className="flex flex-col gap-6 w-full">
+      <div className="flex flex-col gap-2 w-full">
         <PageTitle title="Events" className="md:hidden" />
-        <div className="flex justify-end lg:justify-between items-center gap-4 w-full">
-          <div className="hidden lg:flex gap-2 p-1 bg-secondary rounded-md">
-            <MdOutlineHorizontalSplit size={25} className={`${setdata === true && "text-blue-500"} cursor-pointer`} onClick={() => setSetdata(true)} />
-            <LiaGripHorizontalSolid size={25} className={`${setdata === false && "text-blue-500"} cursor-pointer`} onClick={() => setSetdata(false)} />
+        <div className="flex justify-between items-center gap-4 w-full">
+
+          <div className="flex items-center gap-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="verificationStatus"
+                value="verify"
+                onChange={(e) => setVerificationStatus(e.target.value)}
+                className="mr-2"
+              />
+              Verified
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="verificationStatus"
+                value="not verify"
+                onChange={(e) => setVerificationStatus(e.target.value)}
+                className="mr-2"
+              />
+              Not Verified
+            </label>
           </div>
 
           <div className="flex flex-wrap-reverse sm:flex-nowrap justify-end gap-2">
 
-            <div className="w-full md:w-[400px]">
-              <Search placeholder="Search with Client Name..." />
+            <select name="" id="" className="rounded-lg px-2" onChange={(e: any) => setSearchby(e.target.value)}>
+              <option value="client_name">Client Name</option>
+              <option value="company_name">Company Name</option>
+              <option value="phonenumber">Phone Number</option>
+            </select>
+
+
+            <div className="w-full md:w-[300px]">
+              <Search placeholder="Search" />
             </div>
             <div className="flex items-center gap-4">
               <Select onValueChange={handleSortChange}>
@@ -189,38 +167,42 @@ export default function Page() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Tooltip content="Create an event" placement="bottom">
-                <Button
-                  variant="outline"
-                  className="bg-blue-800 text-white hover:bg-blue-600"
-                  onClick={()=>router.push("/daily-log/create")}
-                >
-                  <Plus />
-                </Button>
-              </Tooltip>
+              {
+                currUser?.isAdmin === false &&
+
+                <Tooltip content="Create an event" placement="bottom">
+                  <Button
+                    variant="outline"
+                    className="bg-blue-800 text-white hover:bg-blue-600"
+                    onClick={() => router.push("/daily-log/create")}
+                  >
+                    <Plus />
+                  </Button>
+                </Tooltip>
+              }
             </div>
           </div>
+
         </div>
         <>
-        {
-          !search && sortCriteria ?
-          <div>
-            <strong className="text-zinc-700">{sortCriteria}</strong>
-          </div>:
-          !search &&
-          <div>
-            <strong className="text-zinc-700">All Daily Logs</strong>
-          </div>
-        }
-        {
-          search &&
-          <div>
-            <strong className="text-zinc-700">Result : {search}</strong>
-          </div>
-        }
+          {
+            !search && sortCriteria ?
+              <div>
+                <strong className="text-zinc-700">{sortCriteria}</strong>
+              </div> :
+              !search &&
+              <div>
+                <strong className="text-zinc-700">All Daily Logs</strong>
+              </div>
+          }
+          {
+            search &&
+            <div>
+              <strong className="text-zinc-700">Result : {search}</strong>
+            </div>
+          }
         </>
-
-        <div className={`grid ${setdata ? "grid-cols-1" : "lg:grid-cols-3"} gap-2`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2`}>
           {
             logsToDisplay ?
               currentItems?.map((event: Idailylog, index: number) => {
@@ -276,25 +258,14 @@ export default function Page() {
                       </div>
                     </div>
                   </div>
-
-
-
-
                 </>
           }
-
           {
-            finallog?.length < 1 &&
+            logsToDisplay?.length < 1 &&
             <p>No data found!</p>
           }
-
-
-
-
         </div>
-
-      
-        <Pageinationsection totalitem={finallog.length} itemsperpage={itemsPerPage} currentpage={currentPage} setCurrentpage={setCurrentPage}/>
+        <Pageinationsection totalitem={finallog.length} itemsperpage={itemsPerPage} currentpage={currentPage} setCurrentpage={setCurrentPage} />
       </div>
     </Container_with_nav>
   );

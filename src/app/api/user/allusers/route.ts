@@ -23,12 +23,13 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ message: "Session expire" })
     }
     
-    const user = await User.findById(decoded?.id);
+    const user = await User.findById(decoded?.id)
     
     if (!user) {
         return NextResponse.json({ message: "user not found" }, { status: 400 });
     }
-    const users = await User.find({ isAdmin: false }).select('-password -createdAt -updatedAt -team -__v')
+    const users = await User.find({ isAdmin: false }).sort({ createdAt: -1 })
+    
     return NextResponse.json({users})
   } catch (error: any) {
     return NextResponse.json({ mesage: error.mesage }, { status: 500 });

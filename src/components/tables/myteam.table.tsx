@@ -33,6 +33,7 @@ import { getUsers } from "@/app/apiconnect/fetch";
 import UserContext from "@/contextapi/userdetail/UserContext";
 import { fetchUser } from "@/contextapi/userdetail/userContextProvider";
 import { IUser, IUserx } from "@/type";
+import { useRouter } from "next/navigation";
 
 type Teamdetail = {
   _id: string
@@ -42,6 +43,7 @@ type Teamdetail = {
   phone: string;
   cv: string;
   user_status: string;
+  addby: string
 };
 
 interface myteams {
@@ -60,6 +62,7 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
     'currentUser',
     fetchUser
   );
+  const route=useRouter()
 
 
   const {
@@ -98,8 +101,6 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
       name: data.name,
       email: data.email,
       phone: data.phone,
-      // cv: data.cv ? data.cv : "",
-      address: data.address_municipility ? `${data.address_province}, ${data.address_district}, ${data.address_municipility}` : curUser[0]?.address
 
     }
     mutation.mutate({ data: payload })
@@ -163,12 +164,12 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                 myteams?.filter((team) => team?.user_status === status)?.length > 0 &&
         <TableHeader>
           <TableRow>
-            <TableHead className="font-semibold text-ghost">SN</TableHead>
-            <TableHead className="font-semibold text-ghost">Name</TableHead>
-            <TableHead className="font-semibold text-ghost">Email</TableHead>
-            <TableHead className="font-semibold text-ghost">Phone</TableHead>
-            <TableHead className="font-semibold text-ghost">Address</TableHead>
-            <TableHead className="font-semibold text-ghost">Actions</TableHead>
+            <TableHead className="">SN</TableHead>
+            <TableHead className="">Name</TableHead>
+            <TableHead className="">Email</TableHead>
+            <TableHead className="">Phone</TableHead>
+            {currUser?.isAdmin===true &&<TableHead className="text-center">Added by</TableHead>}
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>}
         {
@@ -261,19 +262,26 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                         <TableCell className="text-nowrap">{item?.name}</TableCell>
                         <TableCell className="text-nowrap">{item?.email}</TableCell>
                         <TableCell className="text-nowrap">{item?.phone}</TableCell>
-                        <TableCell className="text-nowrap">{item?.address.toLocaleLowerCase()}</TableCell>
+                       {currUser?.isAdmin===true && <TableCell className="text-nowrap text-center">{
+                                 currUser?.id == item?.addby ? <p>Admin</p> : Allusers?.data?.users.find((i: any) => i._id == item?.addby)?.name ? <p onClick={()=>route.push(`/user-profile/${item?.addby}`)} className="cursor-pointer text-blue-700 underline">{Allusers?.data?.users.find((i: any) => i._id == item?.addby)?.name }</p> : "user remove"
+                        
+                       }</TableCell>}
 
-                        <TableCell className="flex gap-2 items-center relative">
+                        <TableCell className="flex gap-2 items-end relative text-right justify-end">
+                          {
+                            item?.cv &&
                           <span className="group" onClick={download}>
                             <Download
                               size={35}
                               className="cursor-pointer border-[1px] hover:bg-secondary p-2 rounded-md text-[20px] text-ghost"
-                            />
+                              />
 
-                            <p className="absolute top-0 opacity-0 group-hover:opacity-100 transform duration-300 text-white px-1 bg-primary rounded-sm text-xs">
-                              Download
+                            <p className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transform duration-300 text-white px-1 bg-primary rounded-sm text-xs">
+                              Download resume
                             </p>
                           </span>
+                            }
+
                           {status === "pending" && currUser?.isAdmin === true && (
                             <Dialog>
                               <DialogTrigger asChild>
@@ -337,65 +345,7 @@ const Myteamtable: React.FC<myteams> = ({ myteams, status, isLoading }) => {
                                       </div>
                                       <Errors error={errors.phone?.message} />
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                      <Label htmlFor="Address" className="font-semibold flex">
-                                        <p>Address</p>
-                                        <Asterisk className="text-red-500" size={11} />
-                                      </Label>
-                                      <div className="grid grid-cols-3 w-full gap-1">
-                                        <select
-                                          {...register("address_province")}
-                                          onChange={(e: any) => setProvince(e.target.value)}
-                                          className="text-sm p-2 rounded-md cursor-pointer"
-                                        >
-                                          <option
-                                            value=""
-                                            className="bg-primary text-white font-semibold "
-                                          >
-                                            Province
-                                          </option>
-                                          {province_list?.map((item, index) => (
-                                            <option value={item} key={item}>
-                                              {item}
-                                            </option>
-                                          ))}
-                                        </select>
-                                        <select
-                                          {...register("address_district")}
-                                          onChange={(e: any) => setDistrict(e.target.value)}
-                                          className="text-sm p-2 rounded-md cursor-pointer"
-                                        >
-                                          <option
-                                            value=""
-                                            className="bg-primary text-white font-semibold "
-                                          >
-                                            District{" "}
-                                          </option>
-                                          {alldistrict?.map((item, index) => (
-                                            <option value={item} key={item}>
-                                              {item}
-                                            </option>
-                                          ))}
-                                        </select>
-                                        <select
-                                          className="text-sm p-2 rounded-md cursor-pointer"
-                                          {...register("address_municipility")}
-                                        >
-                                          <option
-                                            value=""
-                                            className="bg-primary text-white font-semibold"
-                                          >
-                                            Municipility
-                                          </option>
-                                          {allmunicipility?.map((item, index) => (
-                                            <option value={item} key={item}>
-                                              {item}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                      <Errors error={errors.address_municipility?.message} />
-                                    </div>
+                                    
 
                                   </div>
 

@@ -16,17 +16,13 @@ type Iteam={
   name: string
   email: string
   phone: string
-  address_municipility: string,
-  address_district: string,
-  address_province: string,
-  cv?: any
+  
 }
 
 type Iprofile={
   name: string
   email: string
   phone: string
-  address: string | undefined
   cv?: any
   profile_image?: any
 }
@@ -158,6 +154,14 @@ export const addDailylog = async ({ data }:{data:Iteam }) => {
 export const getlog_byid = async ({ data }:{data: {log_id: string}}) => {
   try {
       const res = await axios.post('/api/dailylog/getlogbyid', data);
+      return res.data;
+  } catch (error: any) {
+    throw new Error(error.response.data.message); 
+  }
+};
+export const getuser_byid = async ({ data }:{data: {user_id: string}}) => {
+  try {
+      const res = await axios.post('/api/user/getuserbyid', data);
       return res.data;
   } catch (error: any) {
     throw new Error(error.response.data.message); 

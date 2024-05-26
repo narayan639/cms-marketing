@@ -12,8 +12,8 @@ connect()
 export async function POST(req: NextRequest) {
     try {
         const reqBody = await req.json()
-        const { name, email, phone, address_province,address_district,address_municipility, cv } = reqBody
-        if (!name || !email || !phone || !address_province || !address_district || !address_municipility) {
+        const { name, email, phone} = reqBody
+        if (!name || !email || !phone) {
             return NextResponse.json({ error: "Bad Request" }, { status: 400 });
 
         }
@@ -48,6 +48,7 @@ export async function POST(req: NextRequest) {
         }
         const newuser = await User.findOne({ email });
 
+
         if (newuser) {
             return NextResponse.json(
                 { message: "User already exit" },
@@ -55,15 +56,58 @@ export async function POST(req: NextRequest) {
             );
         }
         const password = Math.floor(100000 + Math.random() * 900000).toString();
+        console.log(password)
 
+        if(user.isAdmin){
+        const salt = await bcrypt.genSalt(10);
+
+        const hashpassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
+            addby: user._id,
             email,
             phone,
             name,
-            address: `${address_province}, ${address_district}, ${address_municipility}`,
-            password,
-            cv
+            user_status: "approved",
+            password: hashpassword
+        });
+
+        const savedUser = await newUser.save()
+        user.team = [...user.team, savedUser._id]
+        await user.save()
+        await Sendmail({
+            email: savedUser?.email,
+            emailtype: emailType[0],
+            userID: savedUser._id,
+            message: `
+            <div className="flex flex-col">
+            <h3>please Signup with follwoing email and password</h3>
+            <h4>
+            Email: ${savedUser?.email}
+            </h4>
+            <strong>
+            password: ${password}
+            </h4>
+            <h4 className="flex">login Url:  
+            ${process.env.DOMAIN}/login
+            </h4>
+          
+            <p classNmae="text-[18px] mt-5">
+            Thank you!
+            </p>
+            </div>`,
+        });
+
+        return NextResponse.json({ message: "Team added.", success: true });
+
+        }
+
+        const newUser = new User({
+            addby: user._id,
+            email,
+            phone,
+            name,
+            password
         });
 
         const savedUser = await newUser.save();

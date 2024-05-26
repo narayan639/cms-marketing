@@ -27,12 +27,19 @@ import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
 import { addDailylog } from "@/app/apiconnect/formhandler";
 import { getDailylogs } from "@/app/apiconnect/fetch";
+import { fetchUser } from "@/contextapi/userdetail/userContextProvider";
+import { IUser } from "@/type";
+import UserContext from "@/contextapi/userdetail/UserContext";
 
 export default function EventForm() {
   const router = useRouter()
  
-  const {data: Allogs, refetch: refatchlogs}=useQuery("logs", getDailylogs)
-
+  const { data: userinfo, error, isLoading, refetch: refetchUser } = useQuery<IUser | null>(
+    'currentUser',
+    fetchUser
+  );
+  const {setCurrUser}=useContext(UserContext)
+  
   const form = useForm({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
@@ -48,12 +55,11 @@ export default function EventForm() {
       remarks: "",
     },
   });
-
+console.log("fg", userinfo)
   const mutation = useMutation(addDailylog, {
     onSuccess: (data) => {
       toast.success(data?.message)
-      form.reset();
-      refatchlogs()
+      router.push("/daily-log")
     },
     onError: (error: any) => {
       toast.error(error?.message)
