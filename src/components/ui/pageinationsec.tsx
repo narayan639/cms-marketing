@@ -28,7 +28,7 @@ const Pageinationsection = ({ itemsperpage, currentpage, totalitem, setCurrentpa
     return (
         <>
         {
-     totalitem>0 &&
+     totalitem>9 &&
         <Pagination className='flex justify-end'>
             <PaginationContent className=''>
                 <PaginationItem >

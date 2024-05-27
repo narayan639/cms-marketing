@@ -103,7 +103,7 @@ export default function Page() {
   }, [verificationStatus, search, searchby, sortCriteria, logsToDisplay]);
 
   const handleVerificationStatusChange = (status: string) => {
-    setVerificationStatus(prevStatus => prevStatus === status ? '' : status);
+    setVerificationStatus(prevStatus => prevStatus == status ? '' : status);
     // Reset other filters
     setSortCriteria('');
   };
@@ -132,8 +132,7 @@ export default function Page() {
                 id="verify"
                 name="verificationStatus"
                 value="verify"
-                checked={verificationStatus === 'verify'}
-                onClick={() => handleVerificationStatusChange("")}
+                checked={verificationStatus == 'verify'}
                 onChange={() => handleVerificationStatusChange('verify')}
                 className="mr-2 hidden"
               />
@@ -145,8 +144,7 @@ export default function Page() {
                 id="not verify"
                 name="verificationStatus"
                 value="not verify"
-                checked={verificationStatus === 'not verify'}
-                onClick={() => handleVerificationStatusChange("")}
+                checked={verificationStatus == 'not verify'}
                 onChange={() => handleVerificationStatusChange('not verify')}
                 className="mr-2 hidden"
               />
@@ -173,7 +171,6 @@ export default function Page() {
                 name="verificationStatus"
                 value="verify"
                 checked={verificationStatus === 'verify'}
-                onClick={() => handleVerificationStatusChange("")}
                 onChange={() => handleVerificationStatusChange('verify')}
                 className="mr-2 hidden"
               />
@@ -186,7 +183,6 @@ export default function Page() {
                 name="verificationStatus"
                 value="not verify"
                 checked={verificationStatus === 'not verify'}
-                onClick={() => handleVerificationStatusChange("")}
                 onChange={() => handleVerificationStatusChange('not verify')}
                 className="mr-2 hidden"
               />
