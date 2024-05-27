@@ -90,7 +90,7 @@ const Page = () => {
         </section>
         <section className='flex flex-wrap flex-col'>
           <p className="font-semibold text-zinc-500 text-sm">Posted By: </p>
-          <span className="text-wrap underline text-blue-600 cursor-pointer" onClick={()=>route.push(`/user-profile/${currLog?.addby._id}`)}>{`${currLog?.addby?.name}`}</span>
+          <span className="text-wrap underline text-blue-600 cursor-pointer" onClick={()=>route.push(`/user-profile/${currLog?.addby?._id}`)}>{`${currLog?.addby?.name}`}</span>
         </section>
         <section className='flex flex-wrap flex-col'>
           <p className="font-semibold text-zinc-500 text-sm">Requirements </p>

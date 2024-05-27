@@ -48,55 +48,57 @@ const page = () => {
 
       {
         currUser && currUser.isAdmin &&
-<>
-{
-  user_dailylog ?
+        <>
+          {
+            user_dailylog ?
 
-        <Table className='mt-4 md:mt-0'>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">SN</TableHead>
-              <TableHead className='text-nowrap'>Name</TableHead>
-              <TableHead className='text-nowrap'>Budget</TableHead>
-              <TableHead className="text-right text-nowrap">Insentive</TableHead>
-              <TableHead className="text-right text-nowrap">Date</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {
-              user_dailylog?.map((item: any, index: number) => {
-                const { company_name, budget, date } = item
-                const insentive = (budget * 10) / 100
-                const Date = moment(date).format('ll');
-
-                return (
+              <Table className='mt-4 md:mt-0'>
+                <TableHeader>
                   <TableRow>
-                    <TableCell className="font-medium text-nowrap">{index + 1}</TableCell>
-                    <TableCell className='text-nowrap'>{company_name}</TableCell>
-                    <TableCell className='text-nowrap'>Rs {`${Number(budget).toLocaleString('en-US')}`}</TableCell>
-                    <TableCell className="text-right text-nowrap">Rs {Number(insentive).toLocaleString('en-US')}</TableCell>
-                    <TableCell className="text-right text-nowrap">{Date}</TableCell>
+                    <TableHead className="w-[100px]">SN</TableHead>
+                    <TableHead className='text-nowrap'>Name</TableHead>
+                    <TableHead className='text-nowrap'>Budget</TableHead>
+                    <TableHead className="text-right text-nowrap">Insentive</TableHead>
+                    <TableHead className="text-right text-nowrap">Date</TableHead>
                   </TableRow>
-                )
-              })
-            }
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={2}>Total</TableCell>
-              <TableCell className="text-nowrap">Rs {sum.toLocaleString('en-US')}</TableCell>
-              <TableCell className="text-right text-nowrap">Rs {total_insen_amt.toLocaleString('en-US')}</TableCell>
-              <TableCell className="text-right text-nowrap"></TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>:
-        user_dailylog?.length>0?
-        <p>Wait</p>:
-        <p>No Data Available!</p>
-}
+                </TableHeader>
+                <TableBody>
+                  {
+                    user_dailylog?.map((item: any, index: number) => {
+                      const { company_name, budget, date } = item
+                      const insentive = (budget * 10) / 100
+                      const Date = moment(date).format('ll');
+
+                      return (
+                        <TableRow>
+                          <TableCell className="font-medium text-nowrap">{index + 1}</TableCell>
+                          <TableCell className='text-nowrap'>{company_name}</TableCell>
+                          <TableCell className='text-nowrap'>Rs {`${Number(budget).toLocaleString('en-US')}`}</TableCell>
+                          <TableCell className="text-right text-nowrap">Rs {Number(insentive).toLocaleString('en-US')}</TableCell>
+                          <TableCell className="text-right text-nowrap">{Date}</TableCell>
+                        </TableRow>
+                      )
+                    })
+                  }
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TableCell colSpan={2}>Total</TableCell>
+                    <TableCell className="text-nowrap">Rs {sum.toLocaleString('en-US')}</TableCell>
+                    <TableCell className="text-right text-nowrap">Rs {total_insen_amt.toLocaleString('en-US')}</TableCell>
+                    <TableCell className="text-right text-nowrap"></TableCell>
+                  </TableRow>
+                </TableFooter>
+              </Table> :
+              <p>Data Fetching...</p>
+
+          }
+          {
+             user_dailylog?.length===0 &&
+             <p>No Data Available!</p>
+          }
         </>
-        
-        }
+      }
     </Container_with_nav>
   )
 }

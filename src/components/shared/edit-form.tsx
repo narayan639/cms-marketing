@@ -196,7 +196,7 @@ export default function EditForm({ currentlog }: { currentlog: EventData }) {
 
               </div>
             </div>
-            <div className="flex justify-end gap-4 mt-8 md:pr-20">
+            <div className="flex justify-end gap-4 mt-2 md:mt-0 md:pr-20">
               <button
                 type="button"
                 className="bg-blue-800 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"

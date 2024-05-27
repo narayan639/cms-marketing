@@ -117,7 +117,7 @@ const Dailylog_card = ({ event, showpost }: { event: any, showpost: boolean }) =
         className="flex items-center gap-2 mb-2"
         >
          Post By:
-          <span className='cursor-pointer hover:underline' onClick={()=>route.push(`/user-profile/${event?.addby._id}`)}>{event?.addby.name}</span>
+          <span className='cursor-pointer hover:underline' onClick={()=>route.push(`/user-profile/${event?.addby?._id}`)}>{event?.addby?.name}</span>
         </div>
         }
 

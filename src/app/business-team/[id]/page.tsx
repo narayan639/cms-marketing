@@ -91,13 +91,15 @@ const Page = () => {
           </TableRow>
         </TableFooter>
       </Table>:
-      team?.length>0?
-      <p>Wait!</p>:
-      <p>No Data Available!</p>
+      <p>Data Fetching...</p>
         }
 
       </>
       
+      }
+      {
+         team?.length===0 &&
+         <p>No Data Available!</p>
       }
     </Container_with_nav>
   )
