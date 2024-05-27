@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     if(!log_id){
       return NextResponse.json({message: "id required"},{status: 401})
     }
-    const dailylog = await Dailylog.findById(log_id)
+    const dailylog = await Dailylog.findById(log_id).populate('addby')
     if(!dailylog){
       return NextResponse.json({message: "Daily Log not Found"},{status: 401})
     }

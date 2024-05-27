@@ -159,10 +159,10 @@ const page = () => {
 
       <h1 className='my-2 font-semibold text-[18px] underline'>Contribution</h1>
       <div className='flex gap-2'>
-        <Button onClick={()=>setSelectcont("self")} className={`bg-white text-black hover:bg-zinc-200 border ${selectcont==="self"? "bg-blue-500 hover:bg-blue-700 text-white":""}`}>Self</Button>
-        <Button onClick={()=>setSelectcont("team")} className={`bg-white text-black hover:bg-zinc-200 border ${selectcont==="team"? "bg-blue-500 hover:bg-blue-700 text-white":""}`}>Team</Button>
-        <Button onClick={()=>setSelectcont("dailylog")} className={`bg-white text-black hover:bg-zinc-200 border ${selectcont==="dailylog"? "bg-blue-500 hover:bg-blue-700 text-white":""}`}>Daily Logs</Button>
-        <Button onClick={()=>setSelectcont("client")} className={`bg-white text-black hover:bg-zinc-200 border ${selectcont==="client"? "bg-blue-500 hover:bg-blue-700 text-white":""}`}>View clients</Button>
+        <Button onClick={()=>setSelectcont("self")} className={`bg-white text-black hover:bg-zinc-200 border text-sm ${selectcont==="self"? "bg-blue-600 hover:bg-blue-700 text-white":""}`}>Self</Button>
+        <Button onClick={()=>setSelectcont("team")} className={`bg-white text-black hover:bg-zinc-200 border text-sm ${selectcont==="team"? "bg-blue-600 hover:bg-blue-700 text-white":""}`}>Team</Button>
+        <Button onClick={()=>setSelectcont("dailylog")} className={`bg-white text-black hover:bg-zinc-200 border text-sm ${selectcont==="dailylog"? "bg-blue-600 hover:bg-blue-700 text-white":""}`}>Daily Logs</Button>
+        <Button onClick={()=>setSelectcont("client")} className={`bg-white text-black hover:bg-zinc-200 border text-sm ${selectcont==="client"? "bg-blue-600 hover:bg-blue-700 text-white":""}`}>View clients</Button>
       
       
       </div>

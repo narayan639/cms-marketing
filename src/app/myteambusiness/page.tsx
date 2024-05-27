@@ -12,6 +12,7 @@ import {
 import Link from 'next/link'
 import UserContext from '@/contextapi/userdetail/UserContext'
 import PageTitle from '@/components/common/PageTitle'
+import { useRouter } from 'next/navigation'
 
 interface DailyLog {
   _id: string;
@@ -43,6 +44,7 @@ interface User {
 const Page = () => {
   const { currUser } = useContext(UserContext) as { currUser: User | null };
   const team = currUser?.team;
+  const route=useRouter()
 
   const getVerifiedLogs = (logs: DailyLog[]): DailyLog[] => logs.filter((log) => log.is_verify === "verify");
 
@@ -81,7 +83,7 @@ const Page = () => {
               return (
                 <TableRow key={index}>
                   <TableCell className="font-medium text-nowrap">{index + 1}</TableCell>
-                  <TableCell className='text-nowrap'>{name}</TableCell>
+                  <TableCell className='text-nowrap cursor-pointer text-blue-500 hover:underline' onClick={()=>route.push(`/user-profile/${_id}`)}>{name}</TableCell>
                   <TableCell className='font-medium text-nowrap'>
                     Business Rs {selfSum.toLocaleString('en-US')} <br /><br /> No Of Clients {verifiedSelfLogs.length}
                   </TableCell>
@@ -89,8 +91,8 @@ const Page = () => {
                     Business Rs {teamSum.toLocaleString('en-US')} <br /> <br /> No Of Clients {verifiedTeamLogs.length}
                   </TableCell>
                   <TableCell className="text-right flex flex-col gap-2 items-end text-nowrap">
-                    <Link href={`/business-self/${_id}`} className='border w-20 text-center p-1 rounded-lg hover:bg-blue-500 hover:text-white'>Self</Link>
-                    <Link href={`/business-team/${_id}`} className='border w-20 text-center p-1 rounded-lg hover:bg-blue-500 hover:text-white'>Team</Link>
+                    <Link href={`/business-self/${_id}`} className='border w-28 text-center p-1 rounded-lg hover:bg-blue-500 hover:text-white'>Self Details</Link>
+                    <Link href={`/business-team/${_id}`} className='border w-28 text-center p-1 rounded-lg hover:bg-blue-500 hover:text-white'>Team Details</Link>
                   </TableCell>
                 </TableRow>
               )

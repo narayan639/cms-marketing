@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import { Suspense } from 'react';
 import { Inter } from 'next/font/google';
@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 import UserContextProvider from '@/contextapi/userdetail/userContextProvider';
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -37,8 +38,14 @@ export default function RootLayout({
       >
         <QueryClientProvider client={queryClient}>
           <UserContextProvider>
-            <Suspense fallback={<div>Loading...</div>}>
-              {path === '/login'? null : <SideNavbar />}
+            {path === '/login' ? null : <SideNavbar />}
+            <Suspense fallback={<div className='h-[100vh] w-full flex items-center justify-center'>
+              <div className="h-16 w-16">
+                <Image className='w-full h-full object-contain' src="/img/load.svg" alt="load" width={200} height={200} />
+                <p>Fetching...</p>
+              </div>
+
+            </div>}>
               <div className="w-full">{children}</div>
             </Suspense>
           </UserContextProvider>
@@ -48,3 +55,4 @@ export default function RootLayout({
     </html>
   );
 }
+  

@@ -79,7 +79,7 @@ export default function SideNavbar({}: Props) {
   }
   if (currUser && currUser.isAdmin) {
     links.push({
-      title: "Business",
+      title: "Team Business",
       href: "/myteambusiness",
       icon: Building2,
       variant: "ghost",

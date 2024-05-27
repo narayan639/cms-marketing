@@ -49,6 +49,11 @@ const Page = () => {
       <PageTitle title='Team Business' className='flex md:hidden'/>
       {
         currUser && currUser?.isAdmin &&
+        <>
+        {
+          team?
+        
+        
       <Table className='mt-4 md:mt-0'>
         <TableHeader>
           <TableRow>
@@ -85,7 +90,15 @@ const Page = () => {
             <TableCell className="text-right text-nowrap"></TableCell>
           </TableRow>
         </TableFooter>
-      </Table>}
+      </Table>:
+      team?.length>0?
+      <p>Wait!</p>:
+      <p>No Data Available!</p>
+        }
+
+      </>
+      
+      }
     </Container_with_nav>
   )
 }

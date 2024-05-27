@@ -98,7 +98,7 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
   }
   if (currUser && currUser.isAdmin) {
     links.push({
-      title: "Business",
+      title: "Team Business",
       href: "/myteambusiness",
       icon: Building2,
       variant: "ghost",

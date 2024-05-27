@@ -12,7 +12,8 @@ import Breadcrumbs from '@/components/ui/breadcrumbs'
 
 const Page = () => {
   const mutation = useMutation(getlog_byid)
-  const currLog = mutation?.data?.dailylog
+  const currLog = mutation?.data?.dailylog  
+  console.log("sw",currLog)
 
   const path = usePathname()
   const route=useRouter()
@@ -29,7 +30,7 @@ const Page = () => {
     }
   }, [log_id])
   return (
-    <Container_with_nav page_title='Daily Details'>
+    <Container_with_nav page_title='Daily Log Detail'>
       <Breadcrumbs
         breadcrumbs={[
           { label: "Event", href: "/daily-log" },
@@ -43,50 +44,59 @@ const Page = () => {
       {
         currLog?
       
-      <div className='mt-5 flex flex-wrap text-wrap flex-col gap-5 rounded-md p-3 bg-slate-50'>
-        <section>
-          <strong>Post Date: </strong>
+      <div className='mt-5 flex flex-wrap text-wrap flex-col gap-5 rounded-md bg-blue-50'>
+        <h1 className='text-lg font-semibold text-gray-500 border-b px-2 sm:px-6 pt-2 border-dashed'>Daily Log Detail</h1>
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 px-2 sm:px-6 pb-4'>
+
+        <section className='flex flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Post Date</p>
           <span>{date}</span>
         </section>
-        <section>
-          <strong>Post Time: </strong>
+        <section className='flex flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Post Time </p>
           <span>{currLog?.time}</span>
         </section>
-        <section>
-          <strong>Client Location: </strong>
+        <section className='flex flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Location </p>
           <span>{currLog?.address}</span>
         </section>
-        <section>
-          <strong>Client Name: </strong>
+        <section className='flex flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Client Name</p>
           <span>{currLog?.client_name}</span>
         </section>
-        <section>
-          <strong>Client Company Name: </strong>
+        <section className='flex flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Company Name</p>
           <span>{currLog?.company_name}</span>
         </section>
-        <section>
-          <strong>Client Phone Number: </strong>
+        <section className='flex flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Phone Number </p>
           <span>{currLog?.phonenumber}</span>
         </section>
-        <section>
-          <strong>Client Budget: </strong>
+        <section className='flex flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Client Budget </p>
           <span>Rs {currLog?.budget}</span>
-        </section>
-        <section className='flex flex-wrap'>
-          <strong>Requirements: </strong>
-          <span className="text-wrap">{parse(`${currLog?.requirements}`)}</span>
-        </section>
-        <section className='flex flex-wrap'>
-          <strong>Feedback: </strong>
-          <span className="text-wrap">{parse(`${currLog?.feedback}`)}</span>
         </section>
         {
           currLog?.remarks &&
-          <section className='flex flex-wrap'>
-            <strong>Remarks: </strong>
+          <section className='flex flex-wrap flex-col'>
+            <p className="font-semibold text-zinc-500 text-sm">Remarks</p>
             <span className="text-wrap">{parse(`${currLog?.remarks}`)}</span>
           </section>
         }
+       
+        <section className='flex flex-wrap flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Feedback</p>
+          <span className="text-wrap">{parse(`${currLog?.feedback}`)}</span>
+        </section>
+        <section className='flex flex-wrap flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Posted By: </p>
+          <span className="text-wrap underline text-blue-600 cursor-pointer" onClick={()=>route.push(`/user-profile/${currLog?.addby._id}`)}>{`${currLog?.addby?.name}`}</span>
+        </section>
+        <section className='flex flex-wrap flex-col'>
+          <p className="font-semibold text-zinc-500 text-sm">Requirements </p>
+          <span className="text-wrap">{parse(`${currLog?.requirements}`)}</span>
+        </section>
+        </div>
 
       </div>:
       <div className="border border-blue-100 shadow rounded-md p-4 mt-5 w-full sm:w-[90%]">

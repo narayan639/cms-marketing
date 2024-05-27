@@ -10,6 +10,7 @@ import UserContext from "@/contextapi/userdetail/UserContext";
 import { useContext, useState } from "react";
 import { FaPerson } from "react-icons/fa6";
 import { HiUserGroup } from "react-icons/hi2";
+import { TbBrandTeams } from "react-icons/tb";
 
 
 
@@ -56,7 +57,7 @@ const page = () => {
             } flex gap-2 border hover:text-white`}
             onClick={() => setStatus("client")}
           >
-            <HiUserGroup size={15} />
+            <TbBrandTeams size={15} />
             <p className="hidden md:flex">View Clients</p>{" "}
           </Button>
         </div>

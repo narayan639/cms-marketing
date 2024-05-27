@@ -48,6 +48,9 @@ const page = () => {
 
       {
         currUser && currUser.isAdmin &&
+<>
+{
+  user_dailylog ?
 
         <Table className='mt-4 md:mt-0'>
           <TableHeader>
@@ -86,7 +89,14 @@ const page = () => {
               <TableCell className="text-right text-nowrap"></TableCell>
             </TableRow>
           </TableFooter>
-        </Table>}
+        </Table>:
+        user_dailylog?.length>0?
+        <p>Wait</p>:
+        <p>No Data Available!</p>
+}
+        </>
+        
+        }
     </Container_with_nav>
   )
 }
