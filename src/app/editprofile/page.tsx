@@ -17,7 +17,6 @@ import UserContext from "@/contextapi/userdetail/UserContext";
 import { profileSchema, profileSchemaType } from "../Schema/profileedit.schema";
 import { getEmails } from "../apiconnect/fetch";
 import { MailCheck, MailX } from 'lucide-react';
-import { fetchUser } from "@/contextapi/userdetail/userContextProvider";
 import axios from "axios";
 
 const page = () => {
@@ -35,8 +34,13 @@ const page = () => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [selectedFile_cv, setSelectedFile_cv] = useState<string | null>(null);
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<profileSchemaType>({
-    resolver: zodResolver(profileSchema)
+  const { register, handleSubmit,watch, formState: { errors }, trigger } = useForm<profileSchemaType>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      name: currUser?.name ,
+      email: currUser?.email,
+      phone: currUser?.phone,
+    }
   });
 
   const { data: email, refetch: refetchUsersemail } = useQuery("emails", getEmails);
@@ -188,6 +192,7 @@ const {handleRefetchUser} =useContext(UserContext)
     }
   };
 
+
   return (
     <div>
       <Container_with_nav page_title="Edit profile">
@@ -237,10 +242,11 @@ const {handleRefetchUser} =useContext(UserContext)
                   className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Eg: John Doe"
                   {...register("name")}
-                  defaultValue={currUser?.name}
                   type="text"
                 />
+                { errors?.name?.message &&
                 <Errors error={errors?.name?.message} />
+                }
               </div>
               <div className="flex gap-2 flex-col relative">
                 <Label htmlFor="new_password">Email</Label>
@@ -251,7 +257,6 @@ const {handleRefetchUser} =useContext(UserContext)
                     placeholder="Eg: johndoe@gmail.com"
                     {...register("email")}
                     onChange={(e: any) => setnewemail(e.target.value)}
-                    defaultValue={currUser?.email}
                   />
                   {(!filteredEmails?.includes(newemail) && emailPattern.test(newemail)) && <MailCheck className="px-2 text-green-500" size={40} />}
                   {!emailPattern.test(newemail) && newemail.length > 0 && <MailX className="px-2 text-red-500" size={40} />}
@@ -265,8 +270,7 @@ const {handleRefetchUser} =useContext(UserContext)
                   <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
                   <Input
                     {...register("phone")}
-                    defaultValue={currUser?.phone}
-                    type="text" className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0" />
+                    type="number" className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0" />
                 </div>
                 <Errors error={errors?.phone?.message} />
               </div>

@@ -134,7 +134,7 @@ const page = () => {
                   <div className="flex items-center border rounded-lg">
                 <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
               <Input
-                type="text" {...register("phone")} className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"/>
+                type="number" {...register("phone")} className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0"/>
                 </div>
                   <Errors error={errors.phone?.message} />
                 </div>
@@ -163,7 +163,7 @@ const page = () => {
           className={` ${status === "approved"
             ? "bg-primary text-white"
             : "bg-transparent text-primary"
-            } flex gap-2 border-2 hover:text-white`}
+            } flex gap-2 border hover:text-white`}
           onClick={() => setStatus("approved")}
         >
           <ListTodo size={15} />
@@ -173,7 +173,7 @@ const page = () => {
           className={` ${status === "pending"
             ? "bg-primary text-white"
             : "bg-transparent text-primary"
-            } flex gap-2 border-2 hover:text-white`}
+            } flex gap-2 border hover:text-white`}
           onClick={() => setStatus("pending")}
         >
           <CircleDashed size={15} />

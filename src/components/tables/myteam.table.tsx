@@ -336,7 +336,7 @@ const Myteamtable = ({ myteams, status, isLoading }: myteams) => {
                                       <div className="flex items-center border rounded-lg">
                                         <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
                                         <Input
-                                          type="text" {...register("phone")}
+                                          type="number" {...register("phone")}
                                           defaultValue={selectuser[0]?.phone}
                                           className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0" />
                                       </div>

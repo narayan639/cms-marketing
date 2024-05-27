@@ -178,7 +178,7 @@ const page = () => {
             daily_log ?
               daily_log.sort((a: Idailylog, b: Idailylog) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
               .map((event: Idailylog, index: number) => {
-                return <Dailylog_card key={index} event={event} />;
+                return <Dailylog_card key={index} event={event} showpost={false}/>;
               })
                :
               daily_log?.length == 0 ?

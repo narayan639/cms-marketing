@@ -31,7 +31,7 @@ const page = () => {
               status === "self"
                 ? "bg-primary text-white"
                 : "bg-transparent text-primary"
-            } flex gap-2 border-2 hover:text-white`}
+            } flex gap-2 border hover:text-white`}
             onClick={() => setStatus("self")}
           >
             <FaPerson size={15} />
@@ -42,7 +42,7 @@ const page = () => {
               status === "team"
                 ? "bg-primary text-white"
                 : "bg-transparent text-primary"
-            } flex gap-2 border-2 hover:text-white`}
+            } flex gap-2 border hover:text-white`}
             onClick={() => setStatus("team")}
           >
             <HiUserGroup size={15} />
@@ -53,7 +53,7 @@ const page = () => {
               status === "client"
                 ? "bg-primary text-white"
                 : "bg-transparent text-primary"
-            } flex gap-2 border-2 hover:text-white`}
+            } flex gap-2 border hover:text-white`}
             onClick={() => setStatus("client")}
           >
             <HiUserGroup size={15} />

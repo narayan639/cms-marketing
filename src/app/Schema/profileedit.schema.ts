@@ -8,37 +8,17 @@ export const profileSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   email: z
     .string()
-    .min(1, { message: "Email is required." })
-    .email({ message: "Must be a valid email." }),
+    .min(3, { message: "Email is required." })
+    .email({ message: "Must be a valid email." }).transform((email) => email.toLowerCase()),
   phone: z
     .string()
-    .min(10, { message: "Phone number is required." })
-    .max(14, { message: "Phone no shouldn't be more than 14 digits." }),
+    .min(10)
+    .max(10, { message: "Phone number should be exactly 10 digits." }),
   address_province: z.string(),
   address_district: z.string(),
   address_municipility: z.string(),
-  cv: z
-  .any()
-  .refine(
-    (file) => file !== null && file !== undefined,
-    "Resume is required.",
-  )
-  .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-  .refine(
-    (files) => ACCEPTED_FILE_TYPES.includes(files?.type),
-    ".pdf, .doc and .docx, .txt files are accepted.",
-  ).optional(),
-  profile_image: z
-  .any()
-  .refine(
-    (file) => file !== null && file !== undefined,
-    "Resume is required.",
-  )
-  .refine((file) => file?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-  .refine(
-    (files) => ACCEPTED_FILE_TYPES.includes(files?.type),
-    ".pdf, .doc and .docx, .txt files are accepted.",
-  ).optional(),
+  
+ 
 });
 
 export type profileSchemaType = z.infer<typeof profileSchema>;

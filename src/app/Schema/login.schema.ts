@@ -6,7 +6,8 @@ export const loginSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required." })
-    .email({ message: "Must be a valid email." }),
+    .email({ message: "Must be a valid email." })
+    .transform((email) => email.toLowerCase()),
   password: z.string().min(2, {message: "password is required"})
 
 });

@@ -7,11 +7,10 @@ export const myteamSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required." })
-    .email({ message: "Must be a valid email." }),
-  phone: z
+    .email({ message: "Must be a valid email." }).transform((email) => email.toLowerCase()),
+    phone: z
     .string()
-    .min(10, { message: "Phone number is required." })
-    .max(14, { message: "Phone no shouldn't be more than 14 digits." }),
+    .length(10, { message: "Phone number must be exactly 10 digits." }),
 });
 
 export type myteamSchemaType = z.infer<typeof myteamSchema>;

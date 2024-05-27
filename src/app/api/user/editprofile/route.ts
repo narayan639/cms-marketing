@@ -38,7 +38,11 @@ export async function PUT(req: NextRequest) {
             if (!currUser) {
                 return NextResponse.json({ message: "user not found" }, { status: 400 });
             }
+            const checkemail = await User.findOne({email})
 
+            if (checkemail) {
+                return NextResponse.json({ message: "Email already taken!" }, { status: 400 });
+            }
 
             currUser.name = name
             currUser.email = email

@@ -24,7 +24,7 @@ import { getDailylogs } from '@/app/apiconnect/fetch'
 
 
 
-const Dailylog_card = ({ event }: { event: any }) => {
+const Dailylog_card = ({ event, showpost }: { event: any, showpost: boolean }) => {
   const { currUser } = useContext(UserContext)
   const { isLoading, refetch: refatchlogs}=useQuery("logs", getDailylogs)
 
@@ -111,9 +111,9 @@ const Dailylog_card = ({ event }: { event: any }) => {
           <span>{event.budget} /-</span>
         </div>
         {
-          currUser?.isAdmin===true &&
+          currUser?.isAdmin===true && showpost &&
         <div
-        title="Budget"
+        title="post"
         className="flex items-center gap-2 mb-2"
         >
          Post By:

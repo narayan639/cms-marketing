@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import { useMutation } from "react-query";
 import { addDailylog } from "@/app/apiconnect/formhandler";
 import UserContext from "@/contextapi/userdetail/UserContext";
+import Errors from "../ui/errors";
 
 export default function EventForm() {
   const router = useRouter()
@@ -120,6 +121,7 @@ export default function EventForm() {
                       </PopoverContent>
                     </Popover>
                   </FormControl>
+                  <Errors error={form.formState.errors.date?.message}/>
                 </FormItem>
               )}
             />
@@ -142,6 +144,7 @@ export default function EventForm() {
                       value={field.value ?? undefined} // Convert null to undefined
                     />
                   </FormControl>
+                  <Errors error={form.formState.errors.time?.message}/>
                 </FormItem>
               )}
             />
@@ -158,8 +161,10 @@ export default function EventForm() {
                     {...field}
                     id="client_name"
                     placeholder="Enter client name"
-                    required
+                    
                   />
+                                    <Errors error={form.formState.errors.client_name?.message}/>
+
                 </FormItem>
               )}
             />
@@ -178,8 +183,10 @@ export default function EventForm() {
                     type="number"
                     id="budget"
                     placeholder="Enter client name"
-                    required
+                    
                   />
+                                    <Errors error={form.formState.errors.budget?.message}/>
+
                 </FormItem>
               )}
             />
@@ -197,8 +204,9 @@ export default function EventForm() {
                     {...field}
                     id="address"
                     placeholder="Enter client address"
-                    required
                   />
+                                    <Errors error={form.formState.errors.address?.message}/>
+
                 </FormItem>
               )}
             />
@@ -213,9 +221,11 @@ export default function EventForm() {
                   <Input
                     {...field}
                     id="phonenumber"
+                    type="number"
                     placeholder="Enter phone number"
-                    required
                   />
+                                    <Errors error={form.formState.errors.phonenumber?.message}/>
+
                 </FormItem>
               )}
             />
@@ -230,6 +240,8 @@ export default function EventForm() {
                     id="company_name"
                     placeholder="Enter company name"
                   />
+                                    <Errors error={form.formState.errors.company_name?.message}/>
+
                 </FormItem>
               )}
             />
@@ -245,8 +257,9 @@ export default function EventForm() {
                     {...field}
                     id="feedback"
                     placeholder="Enter feedback"
-                    required
                   />
+                                    <Errors error={form.formState.errors.feedback?.message}/>
+
                 </FormItem>
               )}
             />
@@ -264,6 +277,8 @@ export default function EventForm() {
                     onChange={(content: string) => field.onChange(content)}
                     {...({ id: "requirements" } as any)}
                   />
+                                    <Errors error={form.formState.errors.requirements?.message}/>
+
                 </FormItem>
               )}
             />
@@ -274,6 +289,7 @@ export default function EventForm() {
                 <FormItem className="">
                   <Label htmlFor="remarks">Remarks</Label>
                   <Textarea {...field} id="remarks" placeholder="Enter remarks" />
+                          <Errors error={form.formState.errors.remarks?.message}/>
                 </FormItem>
               )}
             />
