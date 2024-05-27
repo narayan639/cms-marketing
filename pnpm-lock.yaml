@@ -140,6 +140,9 @@ importers:
       jodit-react:
         specifier: ^4.1.2
         version: 4.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      jose:
+        specifier: ^5.3.0
+        version: 5.3.0
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
@@ -3355,6 +3358,9 @@ packages:
 
   jodit@4.2.10:
     resolution: {integrity: sha512-Jj+8/tUXg77zhoKAAe4Reub5RsMkMSTkxLNL4l2rvQcneWyHzO0uoGFZZ1Rx4jWlKEQHwBSw3E7JZ93DZ/VOVA==}
+
+  jose@5.3.0:
+    resolution: {integrity: sha512-IChe9AtAE79ru084ow8jzkN2lNrG3Ntfiv65Cvj9uOCE2m5LNsdHG+9EbxWxAoWRF9TgDOqLN5jm08++owDVRg==}
 
   js-cookie@3.0.5:
     resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
@@ -8766,6 +8772,8 @@ snapshots:
   jodit@4.2.10:
     dependencies:
       autobind-decorator: 2.4.0
+
+  jose@5.3.0: {}
 
   js-cookie@3.0.5: {}
 

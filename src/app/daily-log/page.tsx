@@ -104,45 +104,49 @@ export default function Page() {
 
   const handleVerificationStatusChange = (status: string) => {
     setVerificationStatus(prevStatus => prevStatus === status ? '' : status);
+    // Reset other filters
+    setSortCriteria('');
   };
 
   // Function to handle sort criteria changes
   const handleSortChange = (newSortCriteria: string) => {
     setSortCriteria(newSortCriteria);
+    // Reset other filters
+    setVerificationStatus('');
+    setSearchby('client_name');
   };
 
   // Calculate the index of the first and last items on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = finallog.slice(indexOfFirstItem, indexOfLastItem);
-
   return (
     <Container_with_nav page_title="Events">
       <div className="flex flex-col gap-2 w-full">
         <PageTitle title="Events" className="md:hidden" />
         <div className="flex justify-between items-center gap-4 w-full">
           <div className="flex items-center gap-4">
-            <label htmlFor="verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'verify'? "bg-blue-600 text-white":""}`}>
+            <label htmlFor="verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'verify' ? "bg-blue-600 text-white" : ""}`}>
               <input
                 type="radio"
                 id="verify"
                 name="verificationStatus"
                 value="verify"
                 checked={verificationStatus === 'verify'}
-                onClick={()=>handleVerificationStatusChange("")}
+                onClick={() => handleVerificationStatusChange("")}
                 onChange={() => handleVerificationStatusChange('verify')}
                 className="mr-2 hidden"
               />
               Verified
             </label>
-            <label htmlFor="not verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'not verify'? "bg-blue-600 text-white":""}`}>
+            <label htmlFor="not verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'not verify' ? "bg-blue-600 text-white" : ""}`}>
               <input
                 type="radio"
                 id="not verify"
                 name="verificationStatus"
                 value="not verify"
                 checked={verificationStatus === 'not verify'}
-                onClick={()=>handleVerificationStatusChange("")}
+                onClick={() => handleVerificationStatusChange("")}
                 onChange={() => handleVerificationStatusChange('not verify')}
                 className="mr-2 hidden"
               />

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table"
 import Link from 'next/link'
 import UserContext from '@/contextapi/userdetail/UserContext'
+import PageTitle from '@/components/common/PageTitle'
 
 interface DailyLog {
   _id: string;
@@ -52,8 +53,10 @@ const Page = () => {
 
   return (
     <Container_with_nav page_title='My team Contribution'>
+            <PageTitle title='My team Contribution' className='flex md:hidden'/>
+
       {currUser && currUser.isAdmin &&
-        <Table>
+        <Table className='mt-4 md:mt-2'>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">SN</TableHead>

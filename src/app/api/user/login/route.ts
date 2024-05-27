@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     const tokendata = {
       id: populatedUser._id,
-      isAdmin: populatedUser.isAdmin,
+      role: populatedUser.isAdmin === true ? "admin":"user",
     };
 
     const token = jwt.sign(tokendata, process.env.TOKEN_SECRET as string, {

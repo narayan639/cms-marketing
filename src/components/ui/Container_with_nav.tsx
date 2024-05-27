@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Mobile_nav from "./mobile_nav";
 import PageTitle from "../common/PageTitle";
 import UserContext from "@/contextapi/userdetail/UserContext";
-import { Bell, FileCog, KeySquare, LogOut, Slash } from 'lucide-react';
+import { Bell, FileCog, KeySquare, LogOut, LucideIcon, Slash } from 'lucide-react';
 import { FaChevronDown } from "react-icons/fa6";
 import {
   HandCoins,
@@ -28,6 +28,12 @@ import { useQuery } from "react-query";
 import { getDailylogs } from "@/app/apiconnect/fetch";
 import { Nav } from "./nav";
 
+type NavLink = {
+  title: string;
+  href: string;
+  icon: LucideIcon;
+  variant: "default" | "ghost";
+};
 interface Iprop {
   children: React.ReactNode;
   page_title?: string;
@@ -52,6 +58,61 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
       route.push("/login")
     }
   };
+
+
+
+  const links: NavLink[] = [
+    {
+      title: "Dashboard",
+      href: "/",
+      icon: LayoutDashboard,
+      variant: "default",
+    },
+    {
+      title: "Profile",
+      href: "/profile",
+      icon: UsersRound,
+      variant: "ghost", 
+    },
+    {
+      title: "Daily Log",
+      href: "/daily-log",
+      icon: CalendarPlus,
+      variant: "ghost",
+    },
+    {
+      title: "Teams",
+      href: "/teams",
+      icon: Handshake,
+      variant: "ghost",
+    },
+  ];
+
+  if (currUser && !currUser.isAdmin) {
+    links.push({
+      title: "Business",
+      href: "/client-business",
+      icon: Building2,
+      variant: "ghost",
+    });
+  }
+  if (currUser && currUser.isAdmin) {
+    links.push({
+      title: "Business",
+      href: "/myteambusiness",
+      icon: Building2,
+      variant: "ghost",
+    });
+  }
+  if (currUser && !currUser.isAdmin) {
+    links.push({
+      title: "Payout",
+      href: "/payout-menu",
+      icon: HandCoins,
+      variant: "ghost",
+    });
+  }
+
   
   return (
     <div>
@@ -144,38 +205,7 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
           >
             <Nav
               openside_bar={() => setOpensidebar(!opensidebar)}
-              links={[
-                {
-                  title: "Dashboard",
-                  href: "/",
-                  icon: LayoutDashboard,
-                  variant: "default",
-                },
-                {
-                  title: "Profile",
-                  href: "/profile",
-                  icon: UsersRound,
-                  variant: "ghost",
-                },
-                {
-                  title: "Daily Log",
-                  href: "/daily-log",
-                  icon: CalendarPlus,
-                  variant: "ghost",
-                },
-                {
-                  title: "Teams",
-                  href: "/teams",
-                  icon: Handshake,
-                  variant: "ghost",
-                },
-                {
-                  title: "Business",
-                  href: "/business",
-                  icon: Building2,
-                  variant: "ghost",
-                }
-              ]}
+              links={links}
             />
           </div>
           </div>

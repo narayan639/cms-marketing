@@ -14,6 +14,7 @@ import { useMutation } from 'react-query'
 import { getuser_byid } from '@/app/apiconnect/formhandler'
 import { usePathname, useRouter } from 'next/navigation'
 import UserContext from '@/contextapi/userdetail/UserContext'
+import PageTitle from '@/components/common/PageTitle'
 
 
 const Page = () => {
@@ -45,9 +46,10 @@ const Page = () => {
 
   return (
     <Container_with_nav page_title='Team Business'>
+      <PageTitle title='Team Business' className='flex md:hidden'/>
       {
         currUser && currUser?.isAdmin &&
-      <Table>
+      <Table className='mt-4 md:mt-0'>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px] text-nowrap">SN</TableHead>

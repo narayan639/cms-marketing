@@ -53,7 +53,7 @@ export default function SideNavbar({}: Props) {
       title: "Profile",
       href: "/profile",
       icon: UsersRound,
-      variant: "ghost",
+      variant: "ghost", 
     },
     {
       title: "Daily Log",
@@ -72,7 +72,7 @@ export default function SideNavbar({}: Props) {
   if (currUser && !currUser.isAdmin) {
     links.push({
       title: "Business",
-      href: "/business",
+      href: "/client-business",
       icon: Building2,
       variant: "ghost",
     });
