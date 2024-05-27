@@ -4,7 +4,7 @@ import moment from "moment";
 import PageTitle from "@/components/common/PageTitle";
 import Search from "@/components/ui/search";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { BadgeCheck, CircleSlash2, Plus } from "lucide-react";
 import { Tooltip } from "@nextui-org/tooltip";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -124,8 +124,8 @@ export default function Page() {
     <Container_with_nav page_title="Events">
       <div className="flex flex-col gap-2 w-full">
         <PageTitle title="Events" className="md:hidden" />
-        <div className="flex justify-between items-center gap-4 w-full">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
+          <div className="items-center gap-1 hidden lg:flex">
             <label htmlFor="verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'verify' ? "bg-blue-600 text-white" : ""}`}>
               <input
                 type="radio"
@@ -154,15 +154,45 @@ export default function Page() {
             </label>
           </div>
           <div className="flex flex-wrap-reverse sm:flex-nowrap justify-end gap-2">
+            <div className="flex flex-row gap-1">
             <select name="" id="" className="rounded-lg px-2" onChange={(e: any) => setSearchby(e.target.value)}>
               <option value="client_name">Client Name</option>
               <option value="company_name">Company Name</option>
               <option value="phonenumber">Phone Number</option>
             </select>
-            <div className="w-full md:w-[300px]">
+            <div className=" md:w-[300px]">
               <Search placeholder="Search" />
             </div>
-            <div className="flex items-center gap-4">
+            </div>
+            <div className="flex items-center gap-2 justify-between w-full">
+            <div className="flex items-center gap-1 lg:hidden text-sm">
+            <label htmlFor="verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'verify' ? "bg-blue-600 text-white" : ""}`}>
+              <input
+                type="radio"
+                id="verify"
+                name="verificationStatus"
+                value="verify"
+                checked={verificationStatus === 'verify'}
+                onClick={() => handleVerificationStatusChange("")}
+                onChange={() => handleVerificationStatusChange('verify')}
+                className="mr-2 hidden"
+              />
+              <BadgeCheck/>
+            </label>
+            <label htmlFor="not verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'not verify' ? "bg-blue-600 text-white" : ""}`}>
+              <input
+                type="radio"
+                id="not verify"
+                name="verificationStatus"
+                value="not verify"
+                checked={verificationStatus === 'not verify'}
+                onClick={() => handleVerificationStatusChange("")}
+                onChange={() => handleVerificationStatusChange('not verify')}
+                className="mr-2 hidden"
+              />
+              <CircleSlash2 />
+            </label>
+          </div>
               <Select onValueChange={handleSortChange}>
                 <SelectTrigger className="w-full md:w-[180px]">
                   <SelectValue placeholder="Sort: All Daily Logs" />

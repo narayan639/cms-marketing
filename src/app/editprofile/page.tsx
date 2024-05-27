@@ -34,16 +34,11 @@ const page = () => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [selectedFile_cv, setSelectedFile_cv] = useState<string | null>(null);
 
-  const { register, handleSubmit,watch, formState: { errors }, trigger } = useForm<profileSchemaType>({
+  const { register, handleSubmit, formState: { errors } } = useForm<profileSchemaType>({
     resolver: zodResolver(profileSchema),
-    defaultValues: {
-      name: currUser?.name ,
-      email: currUser?.email,
-      phone: currUser?.phone,
-    }
   });
 
-  const { data: email, refetch: refetchUsersemail } = useQuery("emails", getEmails);
+  const { data: email } = useQuery("emails", getEmails);
 const {handleRefetchUser} =useContext(UserContext)
   const filteredEmails = email?.data.emails.filter((email: string) => email !== currUser?.email);
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,7 +60,6 @@ const {handleRefetchUser} =useContext(UserContext)
   const mutation = useMutation(profileupdate, {
     onSuccess: (data) => {
       toast.success(data?.message);
-      refetchUsersemail();
       handleRefetchUser();
     },
     onError: (error: any) => {
@@ -242,6 +236,7 @@ const {handleRefetchUser} =useContext(UserContext)
                   className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Eg: John Doe"
                   {...register("name")}
+                  defaultValue={currUser?.name}
                   type="text"
                 />
                 { errors?.name?.message &&
@@ -256,6 +251,7 @@ const {handleRefetchUser} =useContext(UserContext)
                     className=" outline-none border-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="Eg: johndoe@gmail.com"
                     {...register("email")}
+                    defaultValue={currUser?.email}
                     onChange={(e: any) => setnewemail(e.target.value)}
                   />
                   {(!filteredEmails?.includes(newemail) && emailPattern.test(newemail)) && <MailCheck className="px-2 text-green-500" size={40} />}
@@ -270,6 +266,7 @@ const {handleRefetchUser} =useContext(UserContext)
                   <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
                   <Input
                     {...register("phone")}
+                    defaultValue={currUser?.phone}
                     type="number" className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0" />
                 </div>
                 <Errors error={errors?.phone?.message} />
