@@ -48,6 +48,9 @@ export default function Page() {
   const [searchby, setSearchby] = useState("client_name");
   const [verificationStatus, setVerificationStatus] = useState('');
 
+  const verifylog= currUser?.isAdmin===true? Allogs?.data?.dailylog.filter((item: any)=>item.is_verify==="verify") :  currUser?.dailylog.filter((item: any)=>item.is_verify==="verify")
+  const notverifylog= currUser?.isAdmin===true? Allogs?.data?.dailylog.filter((item: any)=>item.is_verify==="not verify"): currUser?.dailylog.filter((item: any)=>item.is_verify==="not verify")
+
   useEffect(() => {
     if (logsToDisplay) {
       let filteredLogs = logsToDisplay;
@@ -137,6 +140,10 @@ export default function Page() {
                 className="mr-2 hidden"
               />
               Verified
+              {
+                verifylog &&
+              <p>({verifylog?.length})</p>
+              }
             </label>
             <label htmlFor="not verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'not verify' ? "bg-blue-600 text-white" : ""}`}>
               <input
@@ -149,6 +156,10 @@ export default function Page() {
                 className="mr-2 hidden"
               />
               Not Verified
+              {
+                notverifylog &&
+              <p>({notverifylog?.length})</p>
+              }
             </label>
           </div>
           <div className="flex flex-wrap-reverse sm:flex-nowrap justify-end gap-2">
@@ -174,7 +185,11 @@ export default function Page() {
                 onChange={() => handleVerificationStatusChange('verify')}
                 className="mr-2 hidden"
               />
-              <BadgeCheck/>
+              <BadgeCheck size={20}/>
+              {
+                verifylog &&
+              <p>({verifylog?.length})</p>
+              }
             </label>
             <label htmlFor="not verify" className={`flex items-center cursor-pointer border rounded-lg p-2 ${verificationStatus === 'not verify' ? "bg-blue-600 text-white" : ""}`}>
               <input
@@ -186,7 +201,11 @@ export default function Page() {
                 onChange={() => handleVerificationStatusChange('not verify')}
                 className="mr-2 hidden"
               />
-              <CircleSlash2 />
+              <CircleSlash2 size={20}/>
+              {
+                notverifylog &&
+              <p>({notverifylog?.length})</p>
+              }
             </label>
           </div>
               <Select onValueChange={handleSortChange}>
