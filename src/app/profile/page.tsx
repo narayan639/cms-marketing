@@ -131,10 +131,7 @@ const page = () => {
           currUser?.cv ?
           <div className="mt-4 md:ml-2">
             <h1 className="font-semibold flex items-center gap-2 mb-1">My Resume <GraduationCap className="text-blue-500" /></h1>
-            <div onClick={()=>setCv(currUser?.cv)} className="group hover:brightness-50 transform duration-300 ease-in-out sm:h-[400px] sm:w-[400px] overflow-hidden cursor-pointer rounded-md bg-secondary relative">
-              <Scan className="absolute right-2 top-2 cursor-pointer group-hover:scale-125 duration-300 transform ease-in-out"/>
-              <img className="w-full h-full object-contain group-hover:scale-105 transform duration-300 ease-in-out" src={`${currUser?.cv}`} alt="resume" />
-            </div>
+              <iframe className="w-full h-full object-contain transform duration-300 ease-in-out" src={`${currUser?.cv}`} style={{height:"400px"}}/>
           </div> :
 
           currUser &&
@@ -143,7 +140,7 @@ const page = () => {
           </>
 
       }
-      {
+      {/* {
         cv &&
       <div className="fixed top-0 left-0 bg-black/80 h-[100vh] w-full z-[9999999] flex items-center justify-center">
       <X className="text-white absolute top-4 right-4 cursor-pointer" onClick={()=>setCv('')}/>
@@ -151,7 +148,7 @@ const page = () => {
        <img className="h-full w-full object-contain" src={cv} alt="cv"/>
         </div>
       </div>
-      }
+      } */}
     </Container_with_nav>
   );
 };

@@ -18,6 +18,7 @@ import { profileSchema, profileSchemaType } from "../Schema/profileedit.schema";
 import { getEmails } from "../apiconnect/fetch";
 import { MailCheck, MailX } from 'lucide-react';
 import axios from "axios";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 
 const page = () => {
   const [alldistrict, setAlldistrict] = useState<string[]>([]);
@@ -30,7 +31,7 @@ const page = () => {
   const [load, setLoad] = useState(false);
   const { currUser } = useContext(UserContext);
   const [image, setImage] = useState<File | null>(null);
-  const [image_cv, setImage_cv] = useState<File | null>(null);
+  // const [image_cv, setImage_cv] = useState<File | null>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [selectedFile_cv, setSelectedFile_cv] = useState<string | null>(null);
 
@@ -69,34 +70,34 @@ const {handleRefetchUser} =useContext(UserContext)
 
   const validateFile = (file: File) => {
     const validTypes = ['image/png', 'image/jpg', 'image/jpeg'];
-    const maxSize = 5 * 1024 * 1024; // 5 MB
+    const maxSize = 4 * 1024 * 1024; // 5 MB
     if (!validTypes.includes(file.type)) {
       toast.error("Invalid file type. Only PNG, JPG, and JPEG are allowed.");
       return false;
     }
     if (file.size > maxSize) {
-      toast.error("File size exceeds the 5MB limit.");
+      toast.error("File size exceeds the 4MB limit.");
       return false;
     }
     return true;
   };
 
-  const OnChangeHandler_cv: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      if (!validateFile(file)) {
-        return;
-      }
-      setImage_cv(file);
+  // const OnChangeHandler_cv: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+  //     if (!validateFile(file)) {
+  //       return;
+  //     }
+  //     setImage_cv(file);
 
-      // FileReader to preview image
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedFile_cv(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  //     // FileReader to preview image
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       setSelectedFile_cv(reader.result as string);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const OnChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -115,32 +116,32 @@ const {handleRefetchUser} =useContext(UserContext)
     }
   };
 
-  const onSubmitHandle_cv = async (e: any) => {
-    e.preventDefault();
-    try {
-      if (!image_cv) {
-        return;
-      }
-      setLoad(true);
-      const formData = new FormData();
-      formData.append('image', image_cv);
-      const response = await axios.post("/api/uploadimage", formData);
-      const data = response.data;
-      if (data) {
-        setresume(data.msg);
-        setLoad(false);
-      }
-    } catch (error: any) {
-      console.log("err", error.message);
-    }
-  };
+  // const onSubmitHandle_cv = async (e: any) => {
+  //   e.preventDefault();
+  //   try {
+  //     if (!image_cv) {
+  //       return;
+  //     }
+  //     setLoad(true);
+  //     const formData = new FormData();
+  //     formData.append('image', image_cv);
+  //     const response = await axios.post("/api/uploadimage", formData);
+  //     const data = response.data;
+  //     if (data) {
+  //       setresume(data.msg);
+  //       setLoad(false);
+  //     }
+  //   } catch (error: any) {
+  //     console.log("err", error.message);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (image_cv) {
-      const e = { preventDefault: () => {} };
-      onSubmitHandle_cv(e);
-    }
-  }, [image_cv]);
+  // useEffect(() => {
+  //   if (image_cv) {
+  //     const e = { preventDefault: () => {} };
+  //     onSubmitHandle_cv(e);
+  //   }
+  // }, [image_cv]);
 
   const onSubmitHandle = async (e: any) => {
     e.preventDefault();
@@ -186,7 +187,6 @@ const {handleRefetchUser} =useContext(UserContext)
     }
   };
 
-
   return (
     <div>
       <Container_with_nav page_title="Edit profile">
@@ -213,20 +213,44 @@ const {handleRefetchUser} =useContext(UserContext)
             >
               <div className="flex flex-col md:flex-row gap-5 w-full">
                 <section className="w-full flex flex-[0.5]">
-                  <label htmlFor="uploadp" className="cursor-pointer h-[20vh] w-full flex items-center justify-center border-2 border-dashed">
+                  <label htmlFor="uploadp" className="cursor-pointer w-full h-[20vh] flex items-center justify-center border-2 border-dashed">
                     <input type="file" name="image" id="uploadp" className="hidden" onChange={OnChangeHandler} />
                     <p className="text-zinc-500 font-semibold">Upload Profile</p>
                   </label>
                 </section>
                 {
                   currUser && currUser?.isAdmin === false &&
-                <section className="w-full flex flex-[0.5]">
-                  <label htmlFor="cv" className="h-[20vh] relative cursor-pointer flex items-center justify-center w-full border-2 border-dashed rounded-md">
-                    <img className="h-full w-full object-contain" src={selectedFile_cv ? selectedFile_cv : currUser?.cv ? currUser?.cv : "https://wallpapers.com/images/featured/blank-white-background-xbsfzsltjksfompa.jpg"} alt="" />
+                  <div className="flex flex-[0.5] w-full items-center overflow-hidden justify-center h-[20vh] gap-1 border-2 border-dashed">
+                 <div className="h-full">
+                  <label htmlFor="cv" className="h-fit relative cursor-pointer flex items-center justify-center w-full border-2 border-dashed rounded-md">
+                    <iframe className="h-full w-full object-contain" src={resume ? resume : currUser?.cv ? currUser?.cv : "https://wallpapers.com/images/featured/blank-white-background-xbsfzsltjksfompa.jpg"}/>
+                    </label>
+
                     {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
-                  </label>
-                  <Input type="file" id="cv" className="border-2 hidden" onChange={OnChangeHandler_cv} />
-                </section>
+                                
+                  
+                   </div> 
+                <div className="h-full relative top-[-50px]">
+                 
+
+                    {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
+                  <UploadDropzone endpoint="imageUploader" className="border-none" appearance={
+                    {
+                      
+                      allowedContent:"hidden",
+                      
+                    }
+
+                  }
+                   onClientUploadComplete={(res) => {
+                    setresume(res[0]?.url)
+                  }}
+                  onUploadError={(error: Error) => {
+                    toast.error(error.message)
+                  }}/>               
+                  
+                   </div>
+                   </div>
                 }
               </div>
 
