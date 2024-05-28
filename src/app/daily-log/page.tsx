@@ -136,7 +136,7 @@ export default function Page() {
                 name="verificationStatus"
                 value="verify"
                 checked={verificationStatus == 'verify'}
-                onChange={() => handleVerificationStatusChange('verify')}
+                onClick={() => handleVerificationStatusChange('verify')}
                 className="mr-2 hidden"
               />
               Verified
@@ -152,7 +152,7 @@ export default function Page() {
                 name="verificationStatus"
                 value="not verify"
                 checked={verificationStatus == 'not verify'}
-                onChange={() => handleVerificationStatusChange('not verify')}
+                onClick={() => handleVerificationStatusChange('not verify')}
                 className="mr-2 hidden"
               />
               Not Verified
@@ -182,7 +182,7 @@ export default function Page() {
                 name="verificationStatus"
                 value="verify"
                 checked={verificationStatus === 'verify'}
-                onChange={() => handleVerificationStatusChange('verify')}
+                onClick={() => handleVerificationStatusChange('verify')}
                 className="mr-2 hidden"
               />
               <BadgeCheck size={20}/>
@@ -198,7 +198,7 @@ export default function Page() {
                 name="verificationStatus"
                 value="not verify"
                 checked={verificationStatus === 'not verify'}
-                onChange={() => handleVerificationStatusChange('not verify')}
+                onClick={() => handleVerificationStatusChange('not verify')}
                 className="mr-2 hidden"
               />
               <CircleSlash2 size={20}/>
