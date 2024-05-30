@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
     const decordtoken=await jwt.verify(refreshtoken, process.env.TOKEN_SECRET_REFRESHTOKEN!) as JwtPayload
 
-   const user= await User.findById(decordtoken?.id).select('-password -refreshtoken')
+   const user= await User.findById(decordtoken?.id).select('-password')
 
    if(!user){
     return NextResponse.json({message:"Invalid refresh token!"},{status:401})
@@ -28,20 +28,13 @@ export async function GET(req: NextRequest) {
     id:user._id,
     role:user.isAdmin === true ? "admin":"user",
   };
-  const refresh_tokendata = {
-    id:user._id
-    };
 
   const accesstoken = jwt.sign(tokendata, process.env.TOKEN_SECRET as string, {
-    expiresIn: 60 * 60 * 24,
+    expiresIn: '2h',
   });
-  const new_refreshtoken = jwt.sign(refresh_tokendata, process.env.TOKEN_SECRET_REFRESHTOKEN as string, {
-    expiresIn: 30 * 60 * 60 * 24,
-  });
-   user.refreshtoken=new_refreshtoken
-   await user.save()
+  
 
-   const response = NextResponse.json({
+  const response = NextResponse.json({
     user: {
       id:user._id,
       name:user.name,
@@ -57,14 +50,10 @@ export async function GET(req: NextRequest) {
     message: "Token refresh"
   }, { status: 200 });
 
-  response.cookies.set("token", accesstoken, {
-    maxAge: 60 * 60 * 24
+  response.cookies.set("accesstoken", accesstoken, {
+    maxAge: 2*60*60
   })
-  response.cookies.set('refreshtoken',new_refreshtoken,{
-    httpOnly: true,
-    secure: true,
-    maxAge: 30*60*60*24
-  })
+ 
 
   return response;
   } catch (error: any) {

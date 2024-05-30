@@ -17,14 +17,7 @@ export const Sendmail = async ({
   message: string;
 }) => {
   try {
-    const hashtokken = await bcrypt.hash(userID.toString(), 10);
 
-    if (emailtype === emailType[1]) {
-      await User.findByIdAndUpdate(userID, {
-        forgotPasswordToken: hashtokken,
-        forgotPasswordTokenExpiry: Date.now() + 3600000,
-      });
-    }
 
     const transporter = nodemailer.createTransport({
       service: "gmail",

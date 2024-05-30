@@ -1,7 +1,7 @@
 "use client";
 import PageTitle from "@/components/common/PageTitle";
 import Container_with_nav from "@/components/ui/Container_with_nav";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FileCog, KeySquare, LogOut } from "lucide-react";
 import { Phone } from "lucide-react";
@@ -9,8 +9,6 @@ import { MapPin } from "lucide-react";
 import { Mail } from "lucide-react";
 import { Settings } from "lucide-react";
 import { GraduationCap } from 'lucide-react';
-import { Scan } from 'lucide-react';
-import { X } from 'lucide-react';
 
 
 import {
@@ -27,7 +25,6 @@ import UserContext from "@/contextapi/userdetail/UserContext";
 const page = () => {
   const route = useRouter();
   const { currUser } = useContext(UserContext)
-  const [cv,setCv]=useState("")
   return (
     <Container_with_nav page_title="Profile">
       <PageTitle title="Profile" className="md:hidden" />
@@ -131,7 +128,7 @@ const page = () => {
           currUser?.cv ?
           <div className="mt-4 md:ml-2">
             <h1 className="font-semibold flex items-center gap-2 mb-1">My Resume <GraduationCap className="text-blue-500" /></h1>
-              <iframe className="w-full md:w-[70%] lg:w-[50%] h-[400px] object-contain transform duration-300 ease-in-out" src={`${currUser?.cv}`}/>
+              <iframe className="w-full md:w-[70%] lg:w-[50%] h-[600px] object-contain transform duration-300 ease-in-out" src={`${currUser?.cv}`}/>
           </div> :
 
           currUser &&
@@ -140,15 +137,7 @@ const page = () => {
           </>
 
       }
-      {/* {
-        cv &&
-      <div className="fixed top-0 left-0 bg-black/80 h-[100vh] w-full z-[9999999] flex items-center justify-center">
-      <X className="text-white absolute top-4 right-4 cursor-pointer" onClick={()=>setCv('')}/>
-        <div className="md:h-[95vh] h-[85vh] w-[90%] sm:w-[70%] md:w-[50%] lg:w-[35%] bg-white">
-       <img className="h-full w-full object-contain" src={cv} alt="cv"/>
-        </div>
-      </div>
-      } */}
+     
     </Container_with_nav>
   );
 };

@@ -16,7 +16,7 @@ export async function PUT(req: NextRequest) {
         const header = headers();
         const btoken = header.get("Authorization");
         if (!btoken) {
-            return NextResponse.json({ message: "Bearer token not defined" }, { status: 400 });
+            return NextResponse.json({ message: "Bearer token not defined" }, { status: 403 });
         }
 
         const token = btoken.split(' ').pop();
@@ -78,6 +78,6 @@ export async function PUT(req: NextRequest) {
         }
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }

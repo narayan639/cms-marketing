@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
+
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const resetPasswordRegex = /^\/reset-password\/[^/]+\/[^/]+$/;
 
   const isPublicPath = path === "/login" || path==="/forgot-password" || resetPasswordRegex.test(path)
 
-  const token = request.cookies.get("token")?.value || "";
+  const token = request.cookies.get("accesstoken")?.value || "";
   
   let userRole = "";
 

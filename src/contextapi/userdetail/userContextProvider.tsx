@@ -33,6 +33,12 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
           },
         }
     );
+
+    useEffect(()=>{
+    (async()=>{
+       await axios.get('/api/user/refreshtoken')
+    })()
+    },[])
     
     useEffect(() => {
         if (!currUser && getToken()) {

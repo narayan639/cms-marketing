@@ -16,7 +16,7 @@ import UserContext from "@/contextapi/userdetail/UserContext";
 export default function LoginForm() {
   const [see, setSee] = useState(false)
   const route = useRouter()
-  const {currUser,setCurrUser} =useContext(UserContext)
+  const {setCurrUser} =useContext(UserContext)
   
   const { register, handleSubmit, formState: { errors } } = useForm<loginSchemaType>({ resolver: zodResolver(loginSchema) })
 
@@ -31,10 +31,8 @@ export default function LoginForm() {
     }
   });
 
-
   const onSubmit: SubmitHandler<loginSchemaType> = (data) => mutation.mutate(data)
-
-
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="flex flex-col md:flex-row m-6 space-y-8 md:space-y-0 bg-white shadow-2xl rounded-2xl">

@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const header = headers()
     const btoken = header.get("Authorization")
     if (!btoken) {
-        return NextResponse.json({ message: "Bearer token not define" }, { status: 400 })
+        return NextResponse.json({ message: "Bearer token not define" }, { status: 403 })
     }
     
     const token = btoken.split(' ').pop()

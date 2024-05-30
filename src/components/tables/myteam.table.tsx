@@ -85,8 +85,6 @@ const Myteamtable = ({ myteams, status, isLoading }: myteams) => {
     setselectuser(findcrruser);
   };
   
-  console.log("se",selectuser)
-
 
   const mutation = useMutation(profileupdate, {
     onSuccess: (data) => {

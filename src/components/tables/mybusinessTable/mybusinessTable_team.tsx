@@ -45,11 +45,11 @@ const MyBusiness_team: React.FC<TeamProps> = ({team,isLoading}) => {
     <Table className="rounded-[10px]">
       <TableHeader>
         <TableRow>
-          <TableHead className="">SN</TableHead>
-          <TableHead className="">Team Member</TableHead>
-          <TableHead className="">User ID</TableHead>
-          <TableHead className="text-right">Business</TableHead>
-          <TableHead className="text-right">Total Clients</TableHead>
+          <TableHead className="text-nowrap">SN</TableHead>
+          <TableHead className="text-nowrap">Team Member</TableHead>
+          <TableHead className="text-nowrap">User ID</TableHead>
+          <TableHead className="text-right text-nowrap">Business</TableHead>
+          <TableHead className="text-right text-nowrap">Total Clients</TableHead>
         </TableRow>
       </TableHeader>
 

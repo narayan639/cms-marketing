@@ -37,6 +37,7 @@ const page = () => {
       const mutation = useMutation(resetpassword, {
         onSuccess: (data) => {
           toast.success(data?.message)
+          route.push("/login")
           reset()
         },
         onError:(error: any)=>{

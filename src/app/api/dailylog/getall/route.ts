@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/dbconfig/deconfig";
 import { Dailylog } from "@/models/dailylogModel";
 import { headers } from "next/headers";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { User } from "@/models/userModel";
 
 connect();
@@ -12,12 +12,11 @@ export async function GET(req: NextRequest) {
     const header = headers();
     const btoken = header.get("Authorization");
     if (!btoken) {
-      return NextResponse.json({ message: "Bearer token not defined" }, { status: 400 });
+      return NextResponse.json({ message: "Bearer token not defined" }, { status: 403 });
     }
-
     const token = btoken.split(' ').pop();
 
-    const decoded: any = jwt.verify(token!, process.env.TOKEN_SECRET!);
+    const decoded = jwt.verify(token!, process.env.TOKEN_SECRET!) as JwtPayload
 
     if (!decoded) {
       return NextResponse.json({ message: "Session expired" });

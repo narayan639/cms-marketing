@@ -46,10 +46,10 @@ export async function POST(req: NextRequest) {
         };
 
     const accesstoken = jwt.sign(tokendata, process.env.TOKEN_SECRET as string, {
-      expiresIn: 60 * 60 * 24,
+      expiresIn: '2h',
     });
     const refreshtoken = jwt.sign(refresh_tokendata, process.env.TOKEN_SECRET_REFRESHTOKEN as string, {
-      expiresIn: 30 * 60 * 60 * 24,
+      expiresIn: '1d',
     });
 
     login_user.refreshtoken=refreshtoken
@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
 
 
     const response = NextResponse.json({
+      accesstoken: accesstoken,
       user: {
         id: login_user._id,
         name: login_user.name,
@@ -72,13 +73,13 @@ export async function POST(req: NextRequest) {
       message: "Login Success"
     }, { status: 200 });
 
-    response.cookies.set("token", accesstoken, {
-      maxAge: 60 * 60 * 24
+    response.cookies.set("accesstoken", accesstoken, {
+      maxAge: 2*60*60
     })
     response.cookies.set('refreshtoken',refreshtoken,{
       httpOnly: true,
       secure: true,
-      maxAge: 30*60*60*24
+      maxAge: 24*60*60
     })
 
     return response;

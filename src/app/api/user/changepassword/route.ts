@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const header = headers()
     const btoken = header.get("Authorization")
     if (!btoken) {
-      return NextResponse.json({ message: "Bearer token not define" },{status:400})
+      return NextResponse.json({ message: "Bearer token not define" },{status:403})
     }
     
     const token = btoken.split(' ').pop()
@@ -64,6 +64,6 @@ export async function POST(req: NextRequest) {
       message: "Unable Password change",
     },{status: 400});
   } catch (error: any) {
-    return NextResponse.json({ mesage: error.mesage }, { status: 500 });
+    return NextResponse.json({ message: error.mesage }, { status: 500 });
   }
 }

@@ -51,8 +51,6 @@ const userSchema = new mongoose.Schema({
       ref: Dailylog.modelName,
    },
    refreshtoken: String,
-   forgotPasswordToken: String,
-   forgotPasswordTokenExpiry: Date
 }, {timestamps: true});
 
 

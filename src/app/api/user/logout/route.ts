@@ -7,7 +7,7 @@ connect();
 
 export async function GET(req: NextRequest) {
   try {
-    const token=req.cookies.get('token')?.value
+    const token=req.cookies.get('accesstoken')?.value
     if(!token){
       return NextResponse.json({message:"Unauthorized token!"})
     }
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
       message: "Logout Success",
       success: true,
     });
-    response.cookies.set("token", "", {
+    response.cookies.set("accesstoken", "", {
       httpOnly: true,
       expires: new Date(),
     });
