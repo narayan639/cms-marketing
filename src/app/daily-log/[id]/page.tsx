@@ -44,7 +44,7 @@ const Page = () => {
       {
         currLog?
       
-      <div className='mt-5 flex flex-wrap text-wrap flex-col gap-5 rounded-md bg-blue-50'>
+      <div className='mt-5 flex flex-wrap text-wrap flex-col gap-5 rounded-md bg-blue-50 md:mr-20'>
         <h1 className='text-lg font-semibold text-gray-500 border-b px-2 sm:px-6 pt-2 border-dashed'>Daily Log Detail</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 px-2 sm:px-6 pb-4'>
 

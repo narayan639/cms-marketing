@@ -131,7 +131,7 @@ const page = () => {
           currUser?.cv ?
           <div className="mt-4 md:ml-2">
             <h1 className="font-semibold flex items-center gap-2 mb-1">My Resume <GraduationCap className="text-blue-500" /></h1>
-              <iframe className="w-full h-full object-contain transform duration-300 ease-in-out" src={`${currUser?.cv}`} style={{height:"400px"}}/>
+              <iframe className="w-full md:w-[70%] lg:w-[50%] h-[400px] object-contain transform duration-300 ease-in-out" src={`${currUser?.cv}`}/>
           </div> :
 
           currUser &&

@@ -83,6 +83,7 @@ const page = () => {
               )}
               <Errors error={errors.password?.message} />
             </div>
+            
             <div className="flex gap-2 flex-col relative">
               <Label htmlFor="new_password">New Password</Label>
               <Input

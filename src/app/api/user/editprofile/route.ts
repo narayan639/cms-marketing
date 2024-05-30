@@ -3,6 +3,8 @@ import { connect } from "@/dbconfig/deconfig";
 import { User } from "@/models/userModel";
 import { headers } from "next/headers";
 import jwt from "jsonwebtoken";
+import cloudinary from "@/lib/cloudinary";
+import { utapi } from "@/utils/deleteimagefrom uploadthing";
 
 connect();
 
@@ -42,6 +44,23 @@ export async function PUT(req: NextRequest) {
                 if (checkEmail) {
                     return NextResponse.json({ message: "Email already taken!" }, { status: 400 });
                 }
+            }
+
+            if (profile_image && currUser.profile_image !== profile_image) {
+                if (currUser.profile_image) {
+                    const match = currUser.profile_image.match(/\/v\d+\/([^/]+\/[^.]+)\./);
+                    const decodedString = decodeURIComponent(match[1]);
+                    await cloudinary.v2.api.delete_resources([decodedString]);
+                }
+                currUser.profile_image = profile_image;
+            }
+
+            if (cv && currUser.cv !== cv) {
+                if (currUser.cv) {
+                    const imagekey=currUser?.cv.split("/").pop()
+                    await utapi.deleteFiles(imagekey);
+                }
+                currUser.cv = cv;
             }
 
             // Update user fields

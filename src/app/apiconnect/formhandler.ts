@@ -195,3 +195,20 @@ export const verify_log = async ({log_id}:{log_id: string}) => {
     throw new Error(error.response.data.message); 
   }
 };
+
+export const forgotpassword = async ({ data }:{data:{email: string} }) => {
+  try {
+      const res = await axios.post('/api/forgotpassword/getemailfromuser', data);
+      return res.data;
+  } catch (error: any) {
+    throw new Error(error.response.data.message); 
+  }
+};
+export const resetpassword = async ({ data }:{data:{token: string, new_password: string} }) => {
+  try {
+      const res = await axios.post('/api/forgotpassword/getnewpasswordfromuser', data);
+      return res.data;
+  } catch (error: any) {
+    throw new Error(error.response.data.message); 
+  }
+};

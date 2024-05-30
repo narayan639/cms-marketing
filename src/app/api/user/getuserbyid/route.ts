@@ -7,7 +7,6 @@ connect();
 export async function POST(req: NextRequest) {
   try {
     const {user_id}=await req.json()
-    console.log("uid",user_id)
     if(!user_id){
       return NextResponse.json({message: "id required"},{status: 401})
     }

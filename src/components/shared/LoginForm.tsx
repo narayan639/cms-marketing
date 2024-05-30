@@ -92,6 +92,7 @@ export default function LoginForm() {
             <button type="submit" className={`w-full mt-3 p-2 rounded-lg mb-6 bg-blue-800 text-white hover:bg-blue-600 hover:border-gray-300 hover:border ${mutation?.isLoading ? "cursor-not-allowed opacity-50" : ""}`}>Login
             </button>
           </form>
+          <p className="text-blue-600 cursor-pointer" onClick={()=>route.push("/forgot-password")}>Forgot password?</p>
 
 
         </div>

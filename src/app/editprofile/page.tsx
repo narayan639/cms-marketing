@@ -20,7 +20,7 @@ import { MailCheck, MailX } from 'lucide-react';
 import axios from "axios";
 import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 
-const page = () => {
+const Page = () => {
   const [alldistrict, setAlldistrict] = useState<string[]>([]);
   const [allmunicipility, setAllmunicipility] = useState<string[]>([]);
   const [province, setProvince] = useState("");
@@ -70,7 +70,7 @@ const {handleRefetchUser} =useContext(UserContext)
 
   const validateFile = (file: File) => {
     const validTypes = ['image/png', 'image/jpg', 'image/jpeg'];
-    const maxSize = 4 * 1024 * 1024; // 5 MB
+    const maxSize = 4 * 1024 * 1024; // 4 MB
     if (!validTypes.includes(file.type)) {
       toast.error("Invalid file type. Only PNG, JPG, and JPEG are allowed.");
       return false;
@@ -220,9 +220,9 @@ const {handleRefetchUser} =useContext(UserContext)
                 </section>
                 {
                   currUser && currUser?.isAdmin === false &&
-                  <div className="flex flex-[0.5] w-full items-center overflow-hidden justify-center h-[20vh] gap-1 border-2 border-dashed">
+                  <div className="flex flex-[0.5] w-full items-center overflow-hidden justify-center md:h-[20vh] gap-1 border-2 border-dashed">
                  <div className="h-full">
-                  <label htmlFor="cv" className="h-fit relative cursor-pointer flex items-center justify-center w-full border-2 border-dashed rounded-md">
+                  <label htmlFor="cv" className="h-full relative cursor-pointer flex items-center justify-center w-full border-2 border-dashed rounded-md">
                     <iframe className="h-full w-full object-contain" src={resume ? resume : currUser?.cv ? currUser?.cv : "https://wallpapers.com/images/featured/blank-white-background-xbsfzsltjksfompa.jpg"}/>
                     </label>
 
@@ -230,13 +230,13 @@ const {handleRefetchUser} =useContext(UserContext)
                                 
                   
                    </div> 
-                <div className="h-full relative top-[-50px]">
+                <div className="h-full relative md:top-[-30px]">
                  
 
                     {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
-                  <UploadDropzone endpoint="imageUploader" className="border-none" appearance={
+                  <UploadDropzone endpoint="imageUploader" className="w-[210px] text-sm" appearance={
                     {
-                      
+                      label:"hidden",
                       allowedContent:"hidden",
                       
                     }
@@ -255,22 +255,25 @@ const {handleRefetchUser} =useContext(UserContext)
               </div>
 
               <div className="flex gap-2 flex-col relative">
-                <Label htmlFor="current_password">Full Name</Label>
+                <Label htmlFor="name">Full Name</Label>
                 <Input
+                id="name"
                   className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Eg: John Doe"
                   {...register("name")}
                   defaultValue={currUser?.name}
                   type="text"
                 />
-                { errors?.name?.message &&
-                <Errors error={errors?.name?.message} />
+                { errors?.name && (
+                  <Errors error={errors?.name?.message} />
+                )
                 }
               </div>
               <div className="flex gap-2 flex-col relative">
-                <Label htmlFor="new_password">Email</Label>
+                <Label htmlFor="email">Email</Label>
                 <div className="flex items-center border rounded-lg">
                   <Input
+                  id="email"
                     type="text"
                     className=" outline-none border-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="Eg: johndoe@gmail.com"
@@ -285,10 +288,11 @@ const {handleRefetchUser} =useContext(UserContext)
                 {filteredEmails?.includes(newemail) && <Errors error="Email already taken!" />}
               </div>
               <div className="flex gap-2 flex-col relative">
-                <Label htmlFor="confirm_password">Phone</Label>
+                <Label htmlFor="phone">Phone</Label>
                 <div className="flex items-center border rounded-lg">
                   <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
                   <Input
+                  id="phone"
                     {...register("phone")}
                     defaultValue={currUser?.phone}
                     type="number" className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0" />
@@ -379,4 +383,4 @@ const {handleRefetchUser} =useContext(UserContext)
   );
 };
 
-export default page;
+export default Page;

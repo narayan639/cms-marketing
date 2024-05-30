@@ -4,7 +4,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const isPublicPath = path === "/login";
+  const resetPasswordRegex = /^\/reset-password\/[^/]+\/[^/]+$/;
+
+  const isPublicPath = path === "/login" || path==="/forgot-password" || resetPasswordRegex.test(path)
 
   const token = request.cookies.get("token")?.value || "";
   
@@ -62,6 +64,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/",  // both
+    "/forgot-password",
     "/login",  // both
     "/profile", // both
     "/changepassword", // both
@@ -76,6 +79,7 @@ export const config = {
     "/user-profile/:path*", // admin
     "/business-self/:path*", // admin
     "/business-team/:path*", // admin
+    "/reset-password/:path*", // admin
     "/myteambusiness" // admin
   ],
 };

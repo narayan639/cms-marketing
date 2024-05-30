@@ -35,36 +35,51 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const populatedUser = await User.findById(user._id).populate('team').populate('dailylog')
+    const login_user = await User.findById(user._id).populate('team').populate('dailylog')
 
     const tokendata = {
-      id: populatedUser._id,
-      role: populatedUser.isAdmin === true ? "admin":"user",
+      id: login_user._id,
+      role: login_user.isAdmin === true ? "admin":"user",
     };
+    const refresh_tokendata = {
+      id: login_user._id
+        };
 
-    const token = jwt.sign(tokendata, process.env.TOKEN_SECRET as string, {
+    const accesstoken = jwt.sign(tokendata, process.env.TOKEN_SECRET as string, {
       expiresIn: 60 * 60 * 24,
     });
+    const refreshtoken = jwt.sign(refresh_tokendata, process.env.TOKEN_SECRET_REFRESHTOKEN as string, {
+      expiresIn: 30 * 60 * 60 * 24,
+    });
+
+    login_user.refreshtoken=refreshtoken
+    await login_user.save()
+
 
     const response = NextResponse.json({
       user: {
-        id: populatedUser._id,
-        name: populatedUser.name,
-        email: populatedUser.email,
-        phone: populatedUser.phone,
-        address: populatedUser.address,
-        isAdmin: populatedUser.isAdmin,
-        team: populatedUser.team,
-        dailylog: populatedUser.dailylog,
-        profile: populatedUser.profile_image,
-        cv: populatedUser.cv
+        id: login_user._id,
+        name: login_user.name,
+        email: login_user.email,
+        phone: login_user.phone,
+        address: login_user.address,
+        isAdmin: login_user.isAdmin,
+        team: login_user.team,
+        dailylog: login_user.dailylog,
+        profile: login_user.profile_image,
+        cv: login_user.cv
       },
       message: "Login Success"
     }, { status: 200 });
 
-    response.cookies.set("token", token, {
+    response.cookies.set("token", accesstoken, {
       maxAge: 60 * 60 * 24
-    });
+    })
+    response.cookies.set('refreshtoken',refreshtoken,{
+      httpOnly: true,
+      secure: true,
+      maxAge: 30*60*60*24
+    })
 
     return response;
   } catch (error: any) {

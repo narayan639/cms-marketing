@@ -6,7 +6,7 @@ export const POST=async(req: NextRequest)=>{
 
    const image=formdata.get('image') as unknown as File;
 
-   const data: any=await Uploadimage(image,"Folder x")
+   const data: any=await Uploadimage(image,"cms marketing")
 
    return NextResponse.json({msg: data?.secure_url},{
     status: 200

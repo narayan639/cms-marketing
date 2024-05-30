@@ -35,7 +35,7 @@ export const Sendmail = async ({
     });
 
     const mailOption = {
-      from: '"Hello! Friend 👻" <narayan9limbu@gmail.com>',
+      from: '"CMS-Marketing" <narayan9limbu@gmail.com>',
       to: email,
       subject: emailtype === emailType[0] ? "Signup Details" : "Reset password",
       html: message,
