@@ -3,17 +3,18 @@ import { getlog_byid } from '@/app/apiconnect/formhandler'
 import Container_with_nav from '@/components/ui/Container_with_nav'
 import moment from 'moment'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useMutation } from 'react-query'
 import parse from "html-react-parser"
 import Breadcrumbs from '@/components/ui/breadcrumbs'
+import UserContext from '@/contextapi/userdetail/UserContext'
 
 
 
 const Page = () => {
+  const {currUser}=useContext(UserContext)
   const mutation = useMutation(getlog_byid)
   const currLog = mutation?.data?.dailylog  
-  console.log("sw",currLog)
 
   const path = usePathname()
   const route=useRouter()
@@ -88,10 +89,13 @@ const Page = () => {
           <p className="font-semibold text-zinc-500 text-sm">Feedback</p>
           <span className="text-wrap">{parse(`${currLog?.feedback}`)}</span>
         </section>
+        {
+          currUser?.isAdmin &&
         <section className='flex flex-wrap flex-col'>
           <p className="font-semibold text-zinc-500 text-sm">Posted By: </p>
           <span className="text-wrap underline text-blue-600 cursor-pointer" onClick={()=>route.push(`/user-profile/${currLog?.addby?._id}`)}>{`${currLog?.addby?.name}`}</span>
         </section>
+        }
         <section className='flex flex-wrap flex-col'>
           <p className="font-semibold text-zinc-500 text-sm">Requirements </p>
           <span className="text-wrap">{parse(`${currLog?.requirements}`)}</span>
