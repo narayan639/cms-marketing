@@ -25,13 +25,9 @@ import { getDailylogs } from '@/app/apiconnect/fetch'
 
 
 const Dailylog_card = ({ event, showpost }: { event: any, showpost: boolean }) => {
-  const { currUser } = useContext(UserContext)
+  const { currUser, handleRefetchUser } = useContext(UserContext)
   const { isLoading, refetch: refatchlogs}=useQuery("logs", getDailylogs)
 
-  const { refetch: refatchUser } = useQuery(
-    'currentUser',
-    fetchUser
-  );
 
   const route = useRouter()
 
@@ -48,7 +44,7 @@ const Dailylog_card = ({ event, showpost }: { event: any, showpost: boolean }) =
   const mutation = useMutation(delete_dailylogs, {
     onSuccess: (data) => {
       toast.success(data?.message)
-      refatchUser()
+      handleRefetchUser()
       refatchlogs()
 
     },
