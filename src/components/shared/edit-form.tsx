@@ -14,6 +14,7 @@ import { useMutation } from "react-query";
 import toast from "react-hot-toast";
 import Errors from "../ui/errors";
 import UserContext from "@/contextapi/userdetail/UserContext";
+import { Button } from "../ui/button";
 
 interface EventData {
   _id: string;
@@ -58,7 +59,7 @@ export default function EditForm({ currentlog }: { currentlog: EventData }) {
       company_name: data?.company_name,
       requirements: data?.requirements || '',
       feedback: data?.feedback,
-      remarks: data?.remarks,
+      remarks: data?.remarks || '',
       budget: data?.budget,
       time: currentlog?.time,
       date: currentlog?.date
@@ -76,7 +77,7 @@ export default function EditForm({ currentlog }: { currentlog: EventData }) {
       {
         currentlog ?
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full sm:w-[80%] md:w-[90%] lg:w-[70%]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:pr-20">
               <div className="flex flex-col">
                 <Label htmlFor="clientName" className="mb-2">
@@ -86,6 +87,7 @@ export default function EditForm({ currentlog }: { currentlog: EventData }) {
                   {...register("client_name")}
                   id="client_name"
                   type="text"
+                  className="capitalize"
                   defaultValue={currentlog?.client_name}
                   placeholder="Enter client name"
                 />
@@ -109,16 +111,40 @@ export default function EditForm({ currentlog }: { currentlog: EventData }) {
                 <Label htmlFor="phone" className="mb-2">
                   Phone Number
                 </Label>
+                <div className="flex items-center border rounded-lg">
+                <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
                 <Input
                   id="phone"
                   type="number"
+                  className="border-none"
                   defaultValue={currentlog?.phonenumber}
                   placeholder="Enter phone number"
                   {...register("phonenumber")}
                 />
+                </div>
                 <Errors error={errors.phonenumber?.message} />
 
               </div>
+              
+              <div className="flex flex-col">
+                <Label htmlFor="budget" className="mb-2">
+                  Budget
+                </Label>
+                <div className="flex items-center border rounded-lg">
+                <h2 className="bg-secondary h-10 flex items-center justify-center px-2">Rs</h2>
+                <Input
+                  id="budget"
+                  type="number"
+                  className="border-none"
+                  defaultValue={currentlog?.budget}
+                  placeholder=""
+                  {...register("budget")}
+                />
+                </div>
+                <Errors error={errors.budget?.message} />
+
+              </div>
+              
               <div className="flex flex-col">
                 <Label htmlFor="companyName" className="mb-2">
                   Company Name
@@ -134,19 +160,7 @@ export default function EditForm({ currentlog }: { currentlog: EventData }) {
 
               </div>
 
-              <div className="flex flex-col">
-                <Label htmlFor="budget" className="mb-2">
-                  Budget
-                </Label>
-                <Input
-                  id="budget"
-                  type="number"
-                  defaultValue={currentlog?.budget}
-                  {...register("budget")}
-                />
-                <Errors error={errors.budget?.message} />
-
-              </div>
+              
 
               <div className="flex flex-col">
                 <Label htmlFor="feedback" className="mb-2">
@@ -192,25 +206,28 @@ export default function EditForm({ currentlog }: { currentlog: EventData }) {
                   placeholder="Enter remarks"
                   {...register("remarks")}
                 />
-                <Errors error={errors.remarks?.message} />
 
               </div>
             </div>
             <div className="flex justify-end gap-4 mt-2 md:mt-0 md:pr-20">
-              <button
+              <Button
                 type="button"
                 className="bg-blue-800 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                 onClick={handleCancel}
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
               disabled={mutation.isLoading}
                 type="submit"
                 className="bg-blue-800 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
               >
-                Update
-              </button>
+                {
+                  mutation?.isLoading?
+                  "Updating":
+                  "update"
+                }
+              </Button>
             </div>
           </form> :
 

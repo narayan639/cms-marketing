@@ -45,9 +45,9 @@ const Page = () => {
       {
         currLog?
       
-      <div className='mt-5 flex flex-wrap text-wrap flex-col gap-5 rounded-md bg-blue-50 md:mr-20'>
-        <h1 className='text-lg font-semibold text-gray-500 border-b px-2 sm:px-6 pt-2 border-dashed'>Daily Log Detail</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 px-2 sm:px-6 pb-4'>
+      <div className='mt-5 flex flex-wrap text-wrap flex-col gap-5 rounded-md bg-blue-50 md:mr-20 relative h-max'>
+        <h1 className='text-lg font-semibold text-gray-800 border-b px-2 sm:px-6 pt-2 border-dashed'>Daily Log Detail</h1>
+        <div className='grid grid-cols-1 gap-3 sm:gap-6 px-2 sm:px-6 pb-4'>
 
         <section className='flex flex-col'>
           <p className="font-semibold text-zinc-500 text-sm">Post Date</p>
@@ -96,10 +96,10 @@ const Page = () => {
           <span className="text-wrap underline text-blue-600 cursor-pointer" onClick={()=>route.push(`/user-profile/${currLog?.addby?._id}`)}>{`${currLog?.addby?.name}`}</span>
         </section>
         }
-        <section className='flex flex-wrap flex-col'>
+        <div className='flex flex-wrap text-wrap w-full'>
           <p className="font-semibold text-zinc-500 text-sm">Requirements </p>
-          <span className="text-wrap">{parse(`${currLog?.requirements}`)}</span>
-        </section>
+          <div className="w-full overflow-x-auto mt-2">{parse(`${currLog?.requirements}`)}</div>
+        </div>
         </div>
 
       </div>:

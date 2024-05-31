@@ -305,7 +305,7 @@ const Myteamtable = ({ myteams, status, isLoading }: myteams) => {
                                       </Label>
                                       <Input
                                         id="name"
-                                        className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                                        className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0 capitalize"
                                         {...register("name")}
                                         defaultValue={selectuser[0]?.name}
                                         placeholder="Eg: Hari lal yadav"

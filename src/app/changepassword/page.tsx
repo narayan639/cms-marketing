@@ -16,8 +16,10 @@ import Errors from "@/components/ui/errors";
 import { changepassword } from "../apiconnect/formhandler";
 import { useMutation } from "react-query";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const route=useRouter()
   const [currentVisible, setCurrentVisible] = useState(false);
   const [newVisible, setNewVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -35,6 +37,7 @@ const page = () => {
     onSuccess: (data) => {
       toast.success(data?.message)
       reset()
+      route.push("/profile")
     },
     onError:(error: any)=>{
       toast.error(error?.message)

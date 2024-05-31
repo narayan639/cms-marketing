@@ -126,7 +126,10 @@ const Container_with_nav: React.FC<Iprop> = ({ children, page_title }) => {
           {
             currUser?.isAdmin &&
           <div className="cursor-pointer relative" onClick={()=>route.push("/daily-log")}>
+            {
+              unverify_log?.length>0 &&
             <span className=" absolute animate-bounce top-[-10px] right-[-5px] bg-red-500 text-white h-5 w-5 flex items-center justify-center rounded-full text-xs">{unverify_log?.length}</span>
+            }
             <Bell />
           </div>
           }

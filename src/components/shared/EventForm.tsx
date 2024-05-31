@@ -32,8 +32,8 @@ import Errors from "../ui/errors";
 export default function EventForm() {
   const router = useRouter()
 
-  const {handleRefetchUser}=useContext(UserContext)
-  
+  const { handleRefetchUser } = useContext(UserContext)
+
   const form = useForm({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
@@ -41,9 +41,9 @@ export default function EventForm() {
       time: null,
       client_name: "",
       address: "",
-      phonenumber: 97,
+      phonenumber: '',
       company_name: "",
-      budget: 1,
+      budget: '',
       requirements: "",
       feedback: "",
       remarks: "",
@@ -76,12 +76,12 @@ export default function EventForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-12 mt-10"
+          className=" mt-10 w-full sm:w-[80%] md:w-[90%] lg:w-[70%]"
         >
 
 
           {/* Client Name and Address */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:pr-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* Date of Event */}
             <FormField
               control={form.control}
@@ -121,7 +121,7 @@ export default function EventForm() {
                       </PopoverContent>
                     </Popover>
                   </FormControl>
-                  <Errors error={form.formState.errors.date?.message}/>
+                  <Errors error={form.formState.errors.date?.message} />
                 </FormItem>
               )}
             />
@@ -144,7 +144,7 @@ export default function EventForm() {
                       value={field.value ?? undefined} // Convert null to undefined
                     />
                   </FormControl>
-                  <Errors error={form.formState.errors.time?.message}/>
+                  <Errors error={form.formState.errors.time?.message} />
                 </FormItem>
               )}
             />
@@ -159,11 +159,12 @@ export default function EventForm() {
                   </Label>
                   <Input
                     {...field}
+                    className="capitalize"
                     id="client_name"
                     placeholder="Enter client name"
-                    
+
                   />
-                                    <Errors error={form.formState.errors.client_name?.message}/>
+                  <Errors error={form.formState.errors.client_name?.message} />
 
                 </FormItem>
               )}
@@ -172,20 +173,47 @@ export default function EventForm() {
             {/* Client Name */}
             <FormField
               control={form.control}
+              name="phonenumber"
+              render={({ field }) => (
+                <FormItem className="">
+                  <Label htmlFor="phonenumber">
+                    Phone Number <span className="text-red-600">*</span>
+                  </Label>
+                  <div className="flex items-center border rounded-lg">
+                    <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
+                    <Input
+                      {...field}
+                      id="phonenumber"
+                      className="border-none"
+                      type="number"
+                      placeholder="Enter phone number"
+                    />
+                  </div>
+                  <Errors error={form.formState.errors.phonenumber?.message} />
+
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="budget"
               render={({ field }) => (
                 <FormItem className="">
                   <Label htmlFor="budget">
                     Budget <span className="text-red-600">*</span>
                   </Label>
-                  <Input
-                    {...field}
-                    type="number"
-                    id="budget"
-                    placeholder="Enter client name"
-                    
-                  />
-                                    <Errors error={form.formState.errors.budget?.message}/>
+                  <div className="flex items-center border rounded-lg">
+                    <h2 className="bg-secondary h-10 flex items-center justify-center px-2">Rs</h2>
+                    <Input
+                      {...field}
+                      className="border-none"
+                      type="number"
+                      id="budget"
+
+
+                    />
+                  </div>
+                  <Errors error={form.formState.errors.budget?.message} />
 
                 </FormItem>
               )}
@@ -205,30 +233,12 @@ export default function EventForm() {
                     id="address"
                     placeholder="Enter client address"
                   />
-                                    <Errors error={form.formState.errors.address?.message}/>
+                  <Errors error={form.formState.errors.address?.message} />
 
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="phonenumber"
-              render={({ field }) => (
-                <FormItem className="">
-                  <Label htmlFor="phonenumber">
-                    Phone Number <span className="text-red-600">*</span>
-                  </Label>
-                  <Input
-                    {...field}
-                    id="phonenumber"
-                    type="number"
-                    placeholder="Enter phone number"
-                  />
-                                    <Errors error={form.formState.errors.phonenumber?.message}/>
-
-                </FormItem>
-              )}
-            />
+            
             <FormField
               control={form.control}
               name="company_name"
@@ -240,7 +250,7 @@ export default function EventForm() {
                     id="company_name"
                     placeholder="Enter company name"
                   />
-                                    <Errors error={form.formState.errors.company_name?.message}/>
+                  <Errors error={form.formState.errors.company_name?.message} />
 
                 </FormItem>
               )}
@@ -258,7 +268,7 @@ export default function EventForm() {
                     id="feedback"
                     placeholder="Enter feedback"
                   />
-                                    <Errors error={form.formState.errors.feedback?.message}/>
+                  <Errors error={form.formState.errors.feedback?.message} />
 
                 </FormItem>
               )}
@@ -277,7 +287,7 @@ export default function EventForm() {
                     onChange={(content: string) => field.onChange(content)}
                     {...({ id: "requirements" } as any)}
                   />
-                                    <Errors error={form.formState.errors.requirements?.message}/>
+                  <Errors error={form.formState.errors.requirements?.message} />
 
                 </FormItem>
               )}
@@ -289,14 +299,14 @@ export default function EventForm() {
                 <FormItem className="">
                   <Label htmlFor="remarks">Remarks</Label>
                   <Textarea {...field} id="remarks" placeholder="Enter remarks" />
-                          <Errors error={form.formState.errors.remarks?.message}/>
+                  <Errors error={form.formState.errors.remarks?.message} />
                 </FormItem>
               )}
             />
           </div>
 
 
-          <div className="flex justify-end gap-4 md:pr-20">
+          <div className="flex justify-end gap-4">
             {/* Cancel button */}
             <Button
               type="button"

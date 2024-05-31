@@ -29,7 +29,7 @@ const Tiptap: React.FC<TiptapProps> = ({ id, description, onChange }) => {
     editorProps: {
       attributes: {
         class:
-          "rounded-md border min-h-[150px] mt-1 p-8 focus:outline-none border-input disabled:cursor-not-allowed",
+          "rounded-md border min-h-[150px] mt-1 p-2 focus:outline-none border-input disabled:cursor-not-allowed",
         placeholder: "Write something...",
       },
     },

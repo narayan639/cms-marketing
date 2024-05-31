@@ -7,7 +7,7 @@ export const EventDataSchema = z.object({
   company_name: z.string().min(3, { message: "Company name is required" }),
   requirements: z.string().min(3, { message: "Requirements is required" }),
   feedback: z.string().min(3, { message: "Feedback is required" }),
-  remarks: z.string().min(3, { message: "Remarks are required" }),
+  remarks: z.string().optional(),
   budget: z.string().min(1, { message: "Budget is required" }),
 });
 

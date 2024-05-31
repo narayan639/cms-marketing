@@ -18,7 +18,7 @@ import { profileSchema, profileSchemaType } from "../Schema/profileedit.schema";
 import { getEmails } from "../apiconnect/fetch";
 import { MailCheck, MailX } from 'lucide-react';
 import axios from "axios";
-import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
+import { UploadDropzone } from "@/utils/uploadthing";
 
 const Page = () => {
   const [alldistrict, setAlldistrict] = useState<string[]>([]);
@@ -31,16 +31,14 @@ const Page = () => {
   const [load, setLoad] = useState(false);
   const { currUser } = useContext(UserContext);
   const [image, setImage] = useState<File | null>(null);
-  // const [image_cv, setImage_cv] = useState<File | null>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [selectedFile_cv, setSelectedFile_cv] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors } } = useForm<profileSchemaType>({
     resolver: zodResolver(profileSchema),
   });
 
   const { data: email } = useQuery("emails", getEmails);
-const {handleRefetchUser} =useContext(UserContext)
+  const { handleRefetchUser } = useContext(UserContext)
   const filteredEmails = email?.data.emails.filter((email: string) => email !== currUser?.email);
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -82,22 +80,6 @@ const {handleRefetchUser} =useContext(UserContext)
     return true;
   };
 
-  // const OnChangeHandler_cv: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     const file = e.target.files[0];
-  //     if (!validateFile(file)) {
-  //       return;
-  //     }
-  //     setImage_cv(file);
-
-  //     // FileReader to preview image
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       setSelectedFile_cv(reader.result as string);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
   const OnChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -116,32 +98,7 @@ const {handleRefetchUser} =useContext(UserContext)
     }
   };
 
-  // const onSubmitHandle_cv = async (e: any) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (!image_cv) {
-  //       return;
-  //     }
-  //     setLoad(true);
-  //     const formData = new FormData();
-  //     formData.append('image', image_cv);
-  //     const response = await axios.post("/api/uploadimage", formData);
-  //     const data = response.data;
-  //     if (data) {
-  //       setresume(data.msg);
-  //       setLoad(false);
-  //     }
-  //   } catch (error: any) {
-  //     console.log("err", error.message);
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   if (image_cv) {
-  //     const e = { preventDefault: () => {} };
-  //     onSubmitHandle_cv(e);
-  //   }
-  // }, [image_cv]);
 
   const onSubmitHandle = async (e: any) => {
     e.preventDefault();
@@ -165,7 +122,7 @@ const {handleRefetchUser} =useContext(UserContext)
 
   useEffect(() => {
     if (image) {
-      const e = { preventDefault: () => {} };
+      const e = { preventDefault: () => { } };
       onSubmitHandle(e);
     }
   }, [image]);
@@ -221,50 +178,50 @@ const {handleRefetchUser} =useContext(UserContext)
                 {
                   currUser && currUser?.isAdmin === false &&
                   <div className="flex flex-[0.5] w-full items-center overflow-hidden justify-center md:h-[20vh] gap-1 border-2 border-dashed">
-                 <div className="h-full">
-                  <label htmlFor="cv" className="h-full relative cursor-pointer flex items-center justify-center w-full border-2 border-dashed rounded-md">
-                    <iframe className="h-full w-full object-contain" src={resume ? resume : currUser?.cv ? currUser?.cv : "https://wallpapers.com/images/featured/blank-white-background-xbsfzsltjksfompa.jpg"}/>
-                    </label>
+                    <div className="h-full">
+                      <label htmlFor="cv" className="h-full relative cursor-pointer flex items-center justify-center w-full border-2 border-dashed rounded-md">
+                        <iframe className="h-full w-full object-contain" src={resume ? resume : currUser?.cv ? currUser?.cv : "https://wallpapers.com/images/featured/blank-white-background-xbsfzsltjksfompa.jpg"} />
+                      </label>
 
-                    {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
-                                
-                  
-                   </div> 
-                <div className="h-full relative md:top-[-30px]">
-                 
+                      {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
 
-                    {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
-                  <UploadDropzone endpoint="imageUploader" className="w-[210px] text-sm" appearance={
-                    {
-                      label:"hidden",
-                      allowedContent:"hidden",
-                      
-                    }
 
-                  }
-                   onClientUploadComplete={(res) => {
-                    setresume(res[0]?.url)
-                  }}
-                  onUploadError={(error: Error) => {
-                    toast.error(error.message)
-                  }}/>               
-                  
-                   </div>
-                   </div>
+                    </div>
+                    <div className="h-full relative md:top-[-30px]">
+
+
+                      {!resume && !currUser?.cv && <h1 className="font-bold absolute text-zinc-700">Click Upload Resume</h1>}
+                      <UploadDropzone endpoint="imageUploader" className="w-[210px] text-sm" appearance={
+                        {
+                          label: "hidden",
+                          allowedContent: "hidden",
+
+                        }
+
+                      }
+                        onClientUploadComplete={(res) => {
+                          setresume(res[0]?.url)
+                        }}
+                        onUploadError={(error: Error) => {
+                          toast.error(error.message)
+                        }} />
+
+                    </div>
+                  </div>
                 }
               </div>
 
               <div className="flex gap-2 flex-col relative">
                 <Label htmlFor="name">Full Name</Label>
                 <Input
-                id="name"
-                  className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                  id="name"
+                  className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0 capitalize"
                   placeholder="Eg: John Doe"
                   {...register("name")}
                   defaultValue={currUser?.name}
                   type="text"
                 />
-                { errors?.name && (
+                {errors?.name && (
                   <Errors error={errors?.name?.message} />
                 )
                 }
@@ -273,7 +230,7 @@ const {handleRefetchUser} =useContext(UserContext)
                 <Label htmlFor="email">Email</Label>
                 <div className="flex items-center border rounded-lg">
                   <Input
-                  id="email"
+                    id="email"
                     type="text"
                     className=" outline-none border-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="Eg: johndoe@gmail.com"
@@ -292,7 +249,7 @@ const {handleRefetchUser} =useContext(UserContext)
                 <div className="flex items-center border rounded-lg">
                   <h2 className="bg-secondary h-10 flex items-center justify-center px-2">+977</h2>
                   <Input
-                  id="phone"
+                    id="phone"
                     {...register("phone")}
                     defaultValue={currUser?.phone}
                     type="number" className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0" />

@@ -38,16 +38,9 @@ import axios from "axios";
 
 const page = () => {
   const [open, setOpen] = useState(false)
-  const [alldistrict, setAlldistrict] = useState<string[]>([]);
-  const [allmunicipility, setAllmunicipility] = useState<string[]>([]);
-  const [province, setProvince] = useState("");
-  const [district, setDistrict] = useState("");
   const [status, setStatus] = useState("approved");
   const {currUser}=useContext(UserContext)
-  const [resume, setresume] = useState("");
-  const [load,setLoad]=useState(false)
-  const[image,setImage]=useState<File | null>(null)
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+ 
 
   const {handleRefetchUser}=useContext(UserContext)
   const {
@@ -104,14 +97,14 @@ const page = () => {
               <div className="py-4 flex gap-4 flex-col">
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="name" className="font-semibold flex">
-                    <p>Name</p>
+                    <p>Full Name</p>
                     <Asterisk className="text-red-500" size={11} />
                   </Label>
                   <Input
                     id="name"
                     {...register("name")}
                     placeholder="Eg: Hari lal yadav"
-                    className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0"                  />
+                    className=" outline-none focus-visible:ring-0 focus-visible:ring-offset-0 capitalize"                  />
                   <Errors error={errors.name?.message} />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -147,7 +140,7 @@ const page = () => {
                     <Button type="button" disabled>
                       Processing...
                     </Button> :
-                    <Button disabled={load} type="submit" className="flex gap-2">
+                    <Button disabled={mutation?.isLoading} type="submit" className="flex gap-2">
                       <Plus /> <p>Add Team</p>
                     </Button>
                 }
